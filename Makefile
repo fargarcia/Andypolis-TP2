@@ -1,5 +1,5 @@
 CC = g++ -Wall -Werror -Wconversion
-OBJS = main.o utils.o materials.o buildings.o materialsList.o buildingsList.o
+OBJS = main.o utils.o auxUtils.o materials.o buildings.o materialsList.o buildingsList.o
 
 andypolis: $(OBJS)
 	$(CC) -o andypolis $(OBJS)
@@ -8,20 +8,23 @@ andypolis: $(OBJS)
 main.o: src/main.cpp
 	$(CC) -o main.o -c src/main.cpp
 
-utils.o: utils/utils.cpp utils/utils.h
-	$(CC) -o utils.o -c utils/utils.cpp
+utils.o: src/utils/utils.cpp src/utils/utils.h
+	$(CC) -o utils.o -c src/utils/utils.cpp
 
-materials.o: materials/materials.cpp materials/materials.h
-	$(CC) -o materials.o -c materials/materials.cpp
+auxUtils.o: src/utils/auxUtils.cpp src/utils/auxUtils.h
+	$(CC) -o auxUtils.o -c src/utils/auxUtils.cpp
 
-materialsList.o: materials/materialsList.cpp materials/materialsList.h
-	$(CC) -o materialsList.o -c materials/materialsList.cpp
+materials.o: src/materials/materials.cpp src/materials/materials.h
+	$(CC) -o materials.o -c src/materials/materials.cpp
 
-buildings.o: buildings/buildings.cpp ./buildings/buildings.h
-	$(CC) -o buildings.o -c ./buildings/buildings.cpp
+materialsList.o: src/materials/materialsList.cpp src/materials/materialsList.h
+	$(CC) -o materialsList.o -c src/materials/materialsList.cpp
 
-buildingsList.o: buildings/buildingsList.cpp ./buildings/buildingsList.h
-	$(CC) -o buildingsList.o -c ./buildings/buildingsList.cpp
+buildings.o: src/buildings/buildings.cpp src/buildings/buildings.h
+	$(CC) -o buildings.o -c src/buildings/buildings.cpp
+
+buildingsList.o: src/buildings/buildingsList.cpp src/buildings/buildingsList.h
+	$(CC) -o buildingsList.o -c src/buildings/buildingsList.cpp
 
 valgrind:
 	valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./main
