@@ -4,16 +4,17 @@
 #include "../materials/materials.h"
 #include "../materials/materialsList.h"
 #include "../buildings/buildings.h"
-#include "../buildings/buildingsList.h"
+#include "../map/map.h"
 
 void showMenu();
 
+void loadMap(Map* map);
 void loadMaterials(MaterialsList* materialsList);
-void loadBuildings(BuildingsList* buildingsList);
+void loadBuildings(Buildings* buildingsList);
 
 void buildByName();
 void listBuilt();
-void listAllBuildings(BuildingsList* buildingsList);
+void listAllBuildings(Buildings* buildingsList);
 void demolishByCoordinates();
 void showMap();
 void checkCoordinates();

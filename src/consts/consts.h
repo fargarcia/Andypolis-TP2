@@ -25,10 +25,14 @@ const std::string	SCHOOL 		= "escuela";
 const std::string	OBELISK 	= "obelisco";
 const std::string	POWER_PLANT = "planta electrica";
 
+const std::string	LAKE		= "L";
+const std::string	GROUND		= "T";
+const std::string	ROAD		= "C";
+
 const std::string 	PATH_MATERIALS 	= "./textFiles/materiales.txt";
 const std::string 	PATH_BUILDINGS 	= "./textFiles/edificios.txt";
 const std::string 	PATH_LOCATIONS 	= "./textFiles/ubicaciones.txt";
-const std::string 	PATH_MAP 		= "./textFiles/map.txt";
+const std::string 	PATH_MAP 		= "./textFiles/mapa.txt";
 
 
 #endif

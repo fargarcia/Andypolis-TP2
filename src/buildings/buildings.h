@@ -1,57 +1,25 @@
-#ifndef	BUILDINGS_H
+#ifndef BUILDINGS_H
 #define BUILDINGS_H
 
-#include <vector>
+#include "buildingType.h"
 
-class Building {
+class Buildings { 
 	private:
-		std::string buildingName;
-		int stoneQuantity;
-		int woodQuantity;
-		int metalQuantity;
-		int builtAmount;
-		int allowedAmount;
-		int** locations;
-
-	public:
-		// Constructores
-    	Building(std::string name, int stone, int wood, int metal, int newAllowedAmount);
+		BuildingType ** buildingTypes;
+		int numberOfBuildings;
     
-		// Destructor
-		~Building();
-
-		void addBuilding(int xCoord, int yCoord);
+	public:
+    // Constructores
+		Buildings();
 
 		// Getters
-		std::string getName();
-		int getStoneQuantity();
-		int getWoodQuantity();
-		int getMetalQuantity();
-		int getBuiltAmount();
-		int getAllowedAmount();
-		int** getLocations();
-};
+		BuildingType ** getBuildingTypes();
+		int getNumberOfBuilding();
 
-class Mine : public Building {
-	using Building::Building;
-};
-class Sawmill : public Building {
-	using Building::Building;
-};
-class Factory : public Building {
-	using Building::Building;
-};
-class School : public Building {
-	using Building::Building;
-};
-class Obelisk : public Building {
-	using Building::Building;
-};
-class PowerPlant : public Building {
-	using Building::Building;
-};
-class GenericBuilding : public Building {
-	using Building::Building;
+    // Setters
+
+    void addBuildingType(std::string name, int stone, int wood, int metal, int allowedAmount);
+    
 };
 
 #endif
