@@ -1,8 +1,8 @@
 #include <iostream>
-#include "../utils/utils.h"
-#include "../materials/materials.h"
-#include "../buildings/buildings.h"
-#include "../buildings/buildingsList.h"
+#include "./utils/utils.h"
+#include "./materials/materials.h"
+#include "./buildings/buildings.h"
+#include "./buildings/buildingsList.h"
 
 using namespace std;
 

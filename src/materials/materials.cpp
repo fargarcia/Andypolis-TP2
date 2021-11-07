@@ -9,16 +9,6 @@ Material::Material() {
 	materialName = ' ';
 	materialQuantity = 0;
 }
-
-/* Constructor por copia
-Material::Material(Material& material){
-	string auxName = material.getName();
-	int auxQuantity = material.getQuantity();
-	materialName = auxName;
-	materialQuantity = auxQuantity;
-}
-*/
-
 // Destructor
 
 Material::~Material() {}

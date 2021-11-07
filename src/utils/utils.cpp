@@ -5,6 +5,7 @@
 #include <iterator>
 
 #include "utils.h"
+#include "auxUtils.h"
 #include "../materials/materials.h"
 #include "../materials/materialsList.h"
 #include "../buildings/buildings.h"
@@ -49,21 +50,30 @@ void loadMaterials(MaterialsList* materialsList) {
 
 void loadBuildings(BuildingsList* buildingsList) {
   fstream buildingsFile(PATH_BUILDINGS, ios::in);
-    if (!buildingsFile.is_open())
-        cout << "File not found: " << PATH_BUILDINGS << endl;
+  if (!buildingsFile.is_open())
+    cout << "File not found: " << PATH_BUILDINGS << endl;
     
-    Building* newBuilding;
-    string name;
-    int stone, wood, metal, allowedAmount;
-    while (buildingsFile >> name) {
-        buildingsFile >> stone;
-        buildingsFile >> wood;
-        buildingsFile >> metal;
-        buildingsFile >> allowedAmount;
-        newBuilding = new Building(name, stone, wood, metal, allowedAmount);
-        buildingsList->addBuilding(newBuilding);
-    }
-    buildingsFile.close();
+  string name, location, xCoord, yCoord;
+  int stone, wood, metal, allowedAmount;
+  while (buildingsFile >> name) {
+    buildingsFile >> stone;
+    buildingsFile >> wood;
+    buildingsFile >> metal;
+    buildingsFile >> allowedAmount;
+    buildingsList->addBuildingType(name, stone, wood, metal, allowedAmount);
+  }
+  buildingsFile.close();
+
+  fstream locationsFile(PATH_LOCATIONS, ios::in);
+  if (!locationsFile.is_open())
+    cout << "File not found: " << PATH_LOCATIONS << endl;
+
+  while (locationsFile >> name) {
+    locationsFile >> xCoord;
+    locationsFile >> yCoord;
+    buildingsList -> addBuilding(name, trimCoords(xCoord), trimCoords(yCoord));
+  }
+  locationsFile.close();
 }
 
 void showInventory(MaterialsList* materialsList) {
@@ -86,8 +96,8 @@ void listAllBuildings(BuildingsList* buildingsList) {
         cout << buildingsVector[i] -> getStoneQuantity() << "\t\t";
         cout << buildingsVector[i] -> getWoodQuantity() << "\t\t";
         cout << buildingsVector[i] -> getMetalQuantity()<< "\t\t";
-        cout << buildingsVector[i] -> getQuantityBuilt() << "\t\t\t";
-        cout << (buildingsVector[i] -> getAllowedAmount())-(buildingsVector[i] -> getQuantityBuilt()) << endl;
+        cout << buildingsVector[i] -> getBuiltAmount() << "\t\t\t";
+        cout << (buildingsVector[i] -> getAllowedAmount())-(buildingsVector[i] -> getBuiltAmount()) << endl;
     }
     cout << "----------------------------------------------------------------------------" << endl;
 }

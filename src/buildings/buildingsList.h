@@ -18,7 +18,8 @@ class BuildingsList {
 
     // Setters
 
-    void addBuilding(Building *newBuilding);
+    void addBuildingType(std::string name, int stone, int wood, int metal, int allowedAmount);
+	void addBuilding(std::string name, int xCoord, int yCoord);
     
 };
 

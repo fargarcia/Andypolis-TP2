@@ -10,8 +10,18 @@ Building::Building(std::string name, int stone, int wood, int metal, int newAllo
 	stoneQuantity = stone;
 	woodQuantity = wood;
 	metalQuantity = metal;
-	quantityBuilt = 0;
+	builtAmount = 0;
 	allowedAmount = newAllowedAmount;
+	locations = new int *[0];
+}
+
+void Building::addBuilding(int xCoord, int yCoord){
+	int** newLocations = new int *[builtAmount + 1];
+	copy(locations, locations + builtAmount, newLocations);
+	int newLocation [2] = {xCoord, yCoord};
+	newLocations[builtAmount] = newLocation;
+	locations = newLocations;
+	builtAmount++;
 }
 
 // getters
@@ -31,10 +41,14 @@ int Building::getMetalQuantity() {
   	return metalQuantity;
 }
 
-int Building::getQuantityBuilt() {
-  	return quantityBuilt;
+int Building::getBuiltAmount() {
+  	return builtAmount;
 }
 
 int Building::getAllowedAmount() {
   	return allowedAmount;
 };
+
+int** Building::getLocations() {
+	return locations;
+}
