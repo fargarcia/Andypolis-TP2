@@ -22,16 +22,16 @@ int main() {
   //showMenu();
 
   //MaterialsList materialsList = MaterialsList();
-  Buildings buildingsList = Buildings();
-  //Map map = Map();
+  //Buildings buildingsList = Buildings();
+  Map map = Map();
 
-  //loadMap(&map);
+  loadMap(&map);
 
   //loadMaterials(&materialsList);
   //showInventory(&materialsList);
 
-  loadBuildings(&buildingsList);
-  listAllBuildings(&buildingsList);
+  //loadBuildings(&buildingsList);
+  //listAllBuildings(&buildingsList);
   
 
 
