@@ -86,12 +86,28 @@ void loadBuildings(Buildings* buildingsList) {
     buildingsList->addBuildingType(name, stone, wood, metal, allowedAmount);
   }
   buildingsFile.close();
-  
-  /*
+}
+
+void loadLocations(Map* map, Buildings* buildingList) {
   fstream locationsFile(PATH_LOCATIONS, ios::in);
-  if (!locationsFile.is_open())
-    cout << "File not found: " << PATH_LOCATIONS << endl;
-  */
+  if (!locationsFile.is_open()) {
+    cout << "File not found: " << PATH_BUILDINGS << endl;
+    return;
+  }
+
+  string name;
+  char aux;
+  int xCoord, yCoord;
+  while(locationsFile >> name) {
+    locationsFile >> aux;
+    locationsFile >> xCoord;
+    locationsFile >> aux;
+    locationsFile >> yCoord;
+    locationsFile >> aux;
+    //buildingList -> addLocation(name, xCoord, yCoord);
+  }
+
+  locationsFile.close();
 }
 
 void showInventory(MaterialsList* materialsList) {

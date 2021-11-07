@@ -11,6 +11,7 @@ void showMenu();
 void loadMap(Map* map);
 void loadMaterials(MaterialsList* materialsList);
 void loadBuildings(Buildings* buildingsList);
+void loadLocations(Map* map, Buildings* buildingList);
 
 void buildByName();
 void listBuilt();
