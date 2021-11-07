@@ -1,54 +1,48 @@
 #include <iostream>
 #include "buildings.h"
+#include "buildingType.h"
+#include "../consts/consts.h"
+#include "template.h"
 
 using namespace std;
 
-//// Building
-// Constructor
-Building::Building(std::string name, int stone, int wood, int metal, int newAllowedAmount) {
-	buildingName = name;
-	stoneQuantity = stone;
-	woodQuantity = wood;
-	metalQuantity = metal;
-	builtAmount = 0;
-	allowedAmount = newAllowedAmount;
-	locations = new int *[0];
+//// BuildingsList
+// Constructor sin argumentos
+Buildings::Buildings(){
+  buildingTypes = new BuildingType *[0];
+  numberOfBuildings = 0;
 }
 
-void Building::addBuilding(int xCoord, int yCoord){
-	int** newLocations = new int *[builtAmount + 1];
-	copy(locations, locations + builtAmount, newLocations);
-	int newLocation [2] = {xCoord, yCoord};
-	newLocations[builtAmount] = newLocation;
-	locations = newLocations;
-	builtAmount++;
+int Buildings::getNumberOfBuilding(){
+  return numberOfBuildings;
 }
 
-// getters
-std::string Building::getName() {
-  	return buildingName;
-}
-
-int Building::getStoneQuantity() {
- 		return stoneQuantity;
-}
-
-int Building::getWoodQuantity() {
-  	return woodQuantity;
-}
-
-int Building::getMetalQuantity() {
-  	return metalQuantity;
-}
-
-int Building::getBuiltAmount() {
-  	return builtAmount;
-}
-
-int Building::getAllowedAmount() {
-  	return allowedAmount;
+BuildingType **Buildings::getBuildingTypes(){
+  return buildingTypes;
 };
 
-int** Building::getLocations() {
-	return locations;
-}
+void Buildings::addBuildingType(std::string name, int stone, int wood, int metal, int allowedAmount){
+  BuildingType **newTypes = new BuildingType *[numberOfBuildings + 1];
+  copy(buildingTypes, buildingTypes + numberOfBuildings, newTypes);
+
+  Template* buildingTemplate;
+  if (name == MINE){
+    buildingTemplate = new Mine(name, stone, wood, metal);
+  } else if (name == SAWMILL) {
+    buildingTemplate = new Sawmill(name, stone, wood, metal);
+  } else if (name == FACTORY) {
+    buildingTemplate = new Factory(name, stone, wood, metal);
+  } else if (name == SCHOOL) {
+    buildingTemplate = new School(name, stone, wood, metal);
+  } else if (name == OBELISK) {
+    buildingTemplate = new Obelisk(name, stone, wood, metal);
+  } else if (name == POWER_PLANT) {
+    buildingTemplate = new PowerPlant(name, stone, wood, metal);
+  } else {
+    buildingTemplate = new GenericBuilding(name, stone, wood, metal);
+  };
+  newTypes[numberOfBuildings] = new BuildingType(name, allowedAmount, buildingTemplate);
+
+  buildingTypes = newTypes;
+  numberOfBuildings++;
+};

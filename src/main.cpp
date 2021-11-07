@@ -2,7 +2,7 @@
 #include "./utils/utils.h"
 #include "./materials/materials.h"
 #include "./buildings/buildings.h"
-#include "./buildings/buildingsList.h"
+#include "./map/map.h"
 
 using namespace std;
 
@@ -22,13 +22,16 @@ int main() {
   //showMenu();
 
   //MaterialsList materialsList = MaterialsList();
-  BuildingsList buildingsList = BuildingsList();
+  //Buildings buildingsList = Buildings();
+  Map map = Map();
+
+  loadMap(&map);
 
   //loadMaterials(&materialsList);
   //showInventory(&materialsList);
 
-  loadBuildings(&buildingsList);
-  listAllBuildings(&buildingsList);
+  //loadBuildings(&buildingsList);
+  //listAllBuildings(&buildingsList);
   
 
 

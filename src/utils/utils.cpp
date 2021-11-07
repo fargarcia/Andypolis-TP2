@@ -9,9 +9,9 @@
 #include "../materials/materials.h"
 #include "../materials/materialsList.h"
 #include "../buildings/buildings.h"
-#include "../buildings/buildingsList.h"
 #include "../consts/consts.h"
 #include "../consts/colors.h"
+#include "../map/map.h"
 
 using namespace std;
 
@@ -28,6 +28,27 @@ void showMenu() {
     cout << "\t\t\t\t\t\t"         << BGND_DARK_AQUA_24 << "  8.  Recolectar recursos producidos     " << END_COLOR << endl;
     cout << "\t\t\t\t\t\t"         << BGND_DARK_AQUA_24 << "  9.  Lluvia de recursos                 " << END_COLOR << endl;
     cout << "\t\t\t\t\t\t"         << BGND_DARK_AQUA_24 << "  10. Guardar y salir                    " << END_COLOR << "\n" <<endl;
+}
+
+void loadMap(Map* map){
+  fstream mapFile(PATH_MAP, ios::in);
+    if (!mapFile.is_open())
+        cout << "File not found: " << PATH_MAP << endl;
+
+  int height, width;
+  std::string tileType;
+  mapFile >> height;
+  mapFile >> width;
+
+  map = new Map(height, width);
+
+  for (int yCoord = 0; yCoord < height; yCoord++){
+    for (int xCoord = 0; xCoord < width; xCoord++){
+      mapFile >> tileType;
+      map -> addTile(xCoord, yCoord, tileType);
+    }
+  } 
+  return;
 }
 
 void loadMaterials(MaterialsList* materialsList) {
@@ -48,10 +69,12 @@ void loadMaterials(MaterialsList* materialsList) {
     materialsFile.close();
 }
 
-void loadBuildings(BuildingsList* buildingsList) {
+void loadBuildings(Buildings* buildingsList) {
   fstream buildingsFile(PATH_BUILDINGS, ios::in);
-  if (!buildingsFile.is_open())
+  if (!buildingsFile.is_open()) {
     cout << "File not found: " << PATH_BUILDINGS << endl;
+    return;
+  }
     
   string name, location, xCoord, yCoord;
   int stone, wood, metal, allowedAmount;
@@ -63,17 +86,12 @@ void loadBuildings(BuildingsList* buildingsList) {
     buildingsList->addBuildingType(name, stone, wood, metal, allowedAmount);
   }
   buildingsFile.close();
-
+  
+  /*
   fstream locationsFile(PATH_LOCATIONS, ios::in);
   if (!locationsFile.is_open())
     cout << "File not found: " << PATH_LOCATIONS << endl;
-
-  while (locationsFile >> name) {
-    locationsFile >> xCoord;
-    locationsFile >> yCoord;
-    buildingsList -> addBuilding(name, trimCoords(xCoord), trimCoords(yCoord));
-  }
-  locationsFile.close();
+  */
 }
 
 void showInventory(MaterialsList* materialsList) {
@@ -85,19 +103,20 @@ void showInventory(MaterialsList* materialsList) {
     cout << materialsVector[i] -> getName() << ":\t" << materialsVector[i] -> getQuantity() << endl;
   cout << "----------------------" << endl;
 }
-void listAllBuildings(BuildingsList* buildingsList) {
-  Building** buildingsVector = buildingsList -> getBuildings();
-  int numberOfBuildings = buildingsList -> getNumberOfBuildings();
+
+void listAllBuildings(Buildings* buildingsList) {
+  BuildingType** buildingsVector = buildingsList -> getBuildingTypes();
+  int numberOfBuildings = buildingsList -> getNumberOfBuilding();
   cout << "----------------------------------------------------------------------------" << endl;
     cout << "Listado de edificios:\n" << endl;
     cout << "Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos\t\tPermitidos restantes" << endl;
     for (int i = 0; i < numberOfBuildings; i++) {
         cout << buildingsVector[i] -> getName() <<" "<< "\t";
-        cout << buildingsVector[i] -> getStoneQuantity() << "\t\t";
-        cout << buildingsVector[i] -> getWoodQuantity() << "\t\t";
-        cout << buildingsVector[i] -> getMetalQuantity()<< "\t\t";
+        cout << buildingsVector[i] -> getTemplate() -> getStoneQuantity() << "\t\t";
+        cout << buildingsVector[i] -> getTemplate() -> getWoodQuantity() << "\t\t";
+        cout << buildingsVector[i] -> getTemplate() -> getMetalQuantity()<< "\t\t";
         cout << buildingsVector[i] -> getBuiltAmount() << "\t\t\t";
-        cout << (buildingsVector[i] -> getAllowedAmount())-(buildingsVector[i] -> getBuiltAmount()) << endl;
+        cout << buildingsVector[i] -> getRemaining() << endl;
     }
     cout << "----------------------------------------------------------------------------" << endl;
 }
