@@ -17,6 +17,11 @@ void Map::addTile(int xCoord, int yCoord, std::string tileType){
         tiles[xCoord][yCoord] = GroundTile();
     } else {
         tiles[xCoord][yCoord] = LakeTile();
-    } 
+    }
     return;
+}
+
+Tile& Map::getTile(int xCoord, int yCoord){
+    cout << tiles[0] ->getType() << endl;
+    return tiles[xCoord][yCoord];
 }

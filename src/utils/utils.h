@@ -5,20 +5,17 @@
 #include "../materials/materialsList.h"
 #include "../buildings/buildings.h"
 #include "../map/map.h"
+#include "../city/city.h"
 
 void showMenu();
 
-void loadMap(Map* map);
-void loadMaterials(MaterialsList* materialsList);
-void loadBuildings(Buildings* buildingsList);
-
 void buildByName();
 void listBuilt();
-void listAllBuildings(Buildings* buildingsList);
+void listAllBuildings(City* city);
 void demolishByCoordinates();
 void showMap();
 void checkCoordinates();
-void showInventory(MaterialsList* materialsList);
+void showInventory(City* city);
 void collectResources();
 void resourcesRain();
 void saveAndExit();

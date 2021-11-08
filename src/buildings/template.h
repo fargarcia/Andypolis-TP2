@@ -1,6 +1,10 @@
 #ifndef	TEMPLATE_H
 #define TEMPLATE_H
 
+#include <iostream>
+
+using namespace std;
+
 class Template {
 	private:
 		std::string name;
