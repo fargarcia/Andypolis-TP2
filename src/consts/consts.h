@@ -1,5 +1,6 @@
 #ifndef CONSTS_H
 #define CONSTS_H
+
 const int VALID_OPTIONS = 10;
 
 enum option_t
@@ -14,8 +15,7 @@ enum option_t
 	SHOW_INVENTORY 						= 7,
 	COLLECT_RESOURCES_PRODUCED 			= 8,
 	RAIN_OF_RESOURCES 					= 9,
-	QUIT_AND_SAVE 						= 10,
-	QUIT 								= 11
+	QUIT_AND_SAVE 						= 10
 };
 
 const std::string	MINE 		= "mina";
@@ -28,11 +28,5 @@ const std::string	POWER_PLANT = "planta electrica";
 const std::string	LAKE		= "L";
 const std::string	GROUND		= "T";
 const std::string	ROAD		= "C";
-
-const std::string 	PATH_MATERIALS 	= "./textFiles/materiales.txt";
-const std::string 	PATH_BUILDINGS 	= "./textFiles/edificios.txt";
-const std::string 	PATH_LOCATIONS 	= "./textFiles/ubicaciones.txt";
-const std::string 	PATH_MAP 		= "./textFiles/mapa.txt";
-
 
 #endif

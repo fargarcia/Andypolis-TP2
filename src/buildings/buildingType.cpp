@@ -24,3 +24,15 @@ int BuildingType::getRemaining(){
 Template * BuildingType::getTemplate() {
     return &buildingTemplate;
 }
+
+bool BuildingType::addBuilding(){
+    if(getRemaining() > 0){
+        built ++;
+        return true;
+    }
+    return false;
+}
+
+void BuildingType::removeBuilding(){
+    built--;
+}

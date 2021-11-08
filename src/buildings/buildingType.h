@@ -18,6 +18,8 @@ class BuildingType {
         int getBuiltAmount();
         int getRemaining();
         Template * getTemplate();
+        bool addBuilding();
+        void removeBuilding();
 };
 
 

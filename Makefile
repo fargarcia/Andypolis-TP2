@@ -1,5 +1,5 @@
 CC = g++ -Wall -Werror -Wconversion
-OBJS = main.o utils.o auxUtils.o materials.o materialsList.o buildings.o buildingType.o template.o map.o tile.o
+OBJS = main.o utils.o materials.o materialsList.o buildings.o buildingType.o template.o map.o city.o cityUtils.o tile.o
 
 andypolis: $(OBJS)
 	$(CC) -o andypolis $(OBJS)
@@ -10,9 +10,6 @@ main.o: src/main.cpp
 
 utils.o: src/utils/utils.cpp src/utils/utils.h
 	$(CC) -o utils.o -c src/utils/utils.cpp
-
-auxUtils.o: src/utils/auxUtils.cpp src/utils/auxUtils.h
-	$(CC) -o auxUtils.o -c src/utils/auxUtils.cpp
 
 materials.o: src/materials/materials.cpp src/materials/materials.h
 	$(CC) -o materials.o -c src/materials/materials.cpp
@@ -28,6 +25,12 @@ buildingType.o: src/buildings/buildingType.cpp src/buildings/buildingType.h
 
 template.o: src/buildings/template.cpp src/buildings/template.h
 	$(CC) -o template.o -c src/buildings/template.cpp
+
+city.o: src/city/city.cpp src/city/city.h
+	$(CC) -o city.o -c src/city/city.cpp
+
+cityUtils.o: src/city/utils/utils.cpp src/city/utils/utils.h
+	$(CC) -o cityUtils.o -c src/city/utils/utils.cpp
 
 map.o: src/map/map.cpp src/map/map.h
 	$(CC) -o map.o -c src/map/map.cpp	

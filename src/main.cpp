@@ -3,6 +3,7 @@
 #include "./materials/materials.h"
 #include "./buildings/buildings.h"
 #include "./map/map.h"
+#include "./city/city.h"
 
 using namespace std;
 
@@ -23,15 +24,10 @@ int main() {
 
   //MaterialsList materialsList = MaterialsList();
   //Buildings buildingsList = Buildings();
-  Map map = Map();
+  City city = City();
 
-  loadMap(&map);
-
-  //loadMaterials(&materialsList);
-  //showInventory(&materialsList);
-
-  //loadBuildings(&buildingsList);
-  //listAllBuildings(&buildingsList);
+  showInventory(&city);
+  //listAllBuildings(&city);
   
 
 
