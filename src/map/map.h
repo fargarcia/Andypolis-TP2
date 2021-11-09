@@ -10,8 +10,7 @@ class Map {
 
     public:
         Map();
-        Map(int height, int width);
-
+        void createMap(int height, int width);
         void addTile(int xCoord, int yCoord, std::string tileType);
         Tile& getTile(int xCoord, int yCoord);
 
