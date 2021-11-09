@@ -3,6 +3,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <iterator>
+#include <limits>
 
 #include "utils.h"
 #include "../materials/materials.h"
@@ -61,50 +62,45 @@ void listBuiltBuildings(City* city) {
     int numberOfBuildings = city -> getNumberOfBuilding();
     cout << "----------------------------------------------------------------------------" << endl;
     for(int i = 0; i < numberOfBuildings; i++) {
+        cout << "building amount" << buildingTypes[i] -> getBuiltAmount() << endl;
         if(buildingTypes[i] -> getBuiltAmount() != 0) {
             cout << buildingTypes[i] -> getName() <<" "<< "\t";
             cout << buildingTypes[i] -> getBuiltAmount() << "\t\t\t";
             // FALTA AGREGAR LAS COORDENADAS DONDE ESTÁ CADA EDIFICIO
         }
     }
+    cout << "----------------------------------------------------------------------------" << endl;
 }
 
-void askForOption(char* option) {
+void askForOption(int* option) {
     cout << "Ingrese el numero de la accion que desea realizar." << endl;
-        cin >> *option;
+    cin >> *option;
 }
 
-int castCharToInt(char selectedOption) {
-    return (int)selectedOption - '0';
-}
-
-bool validateSelectedOption(char& selectedOption) {
+void validateSelectedOption(int& selectedOption) {
     bool validOption = false;
-    int option = 0;
-    if(isdigit(selectedOption)) {
-        option = castCharToInt(selectedOption);
-        if(option > 0 && option <= VALID_OPTIONS)
+    while(validOption == false) {
+        if(cin.fail()) {
+            cin.clear();
+            cin.ignore(sizeof(int), '\n');
+            cout << TXT_RED_196 << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << END_COLOR << endl;
+            askForOption(&selectedOption);
+        }
+        else if (selectedOption <= 0  || selectedOption > 10) {
+            cout << TXT_RED_196 << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << END_COLOR << endl;
+            askForOption(&selectedOption);
+        }
             validOption = true;
     }
-    else 
-        validOption = false;
-    return validOption;
 }
 
-void checkValidOption(char option) {
-    while(!validateSelectedOption(option)) {
-        cout << TXT_RED_196 << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << END_COLOR << endl;
-        askForOption(&option);
-    }
-}
-
-void processOption(City* city, char &option) {
-    switch(castCharToInt(option)) {
+void processOption(City* city, int &option) {
+    switch(option) {
         case BUILD_BY_NAME:
             //buildByName();
             break;
         case LIST_BUILT_BUILDINGS:
-            //listBuilt();
+            listBuiltBuildings(city);
             break;
         case LIST_ALL_BUILDINGS:
             listAllBuildings(city);

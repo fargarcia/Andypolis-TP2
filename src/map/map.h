@@ -22,6 +22,7 @@ class Map {
         int countRoadTileAmount(int height, int width, std::string tileType);
         int getRoadTileAmount();
         void showMap();
+        void printMap(int row, int col);
 
 };  
 

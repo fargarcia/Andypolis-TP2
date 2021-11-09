@@ -17,20 +17,16 @@ using namespace std;
 #endif
 
 int main() {
-  char option = 1;
+  int option = ERROR;
   City city = City();
 
   while(option != QUIT) {
       showMenu();
       askForOption(&option);
-      checkValidOption(option);
-      //system(CLR_SCREEN);
+      validateSelectedOption(option);
+      system(CLR_SCREEN);
       processOption(&city, option);
   }
-
-  showInventory(&city);
-  //listAllBuildings(&city);
  
   return 0;
-
 }

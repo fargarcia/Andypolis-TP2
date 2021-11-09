@@ -9,14 +9,12 @@
 
 void showMenu();
 
-void askForOption(char* option);
-int castCharToInt(char selectedOption);
-bool validateSelectedOption(char& selectedOption);
-void checkValidOption(char option);
-void processOption(City* city, char &option);
+void askForOption(int* option);
+void validateSelectedOption(int& selectedOption);
+void processOption(City* city, int &option);
 
 void buildByName();
-void listBuilt();
+void listBuiltBuildings(City* city);
 void listAllBuildings(City* city);
 void demolishByCoordinates();
 void showMap();
