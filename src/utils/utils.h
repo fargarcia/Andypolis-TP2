@@ -9,6 +9,12 @@
 
 void showMenu();
 
+void askForOption(char* option);
+int castCharToInt(char selectedOption);
+bool validateSelectedOption(char& selectedOption);
+void checkValidOption(char option);
+void processOption(City* city, char &option);
+
 void buildByName();
 void listBuilt();
 void listAllBuildings(City* city);

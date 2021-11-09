@@ -40,9 +40,9 @@ void showInventory(City* city) {
 }
 
 void listAllBuildings(City* city) {
-  BuildingType** buildingTypes = city -> getBuildingTypes();
-  int numberOfBuildings = city -> getNumberOfBuilding();
-  cout << "----------------------------------------------------------------------------" << endl;
+    BuildingType** buildingTypes = city -> getBuildingTypes();
+    int numberOfBuildings = city -> getNumberOfBuilding();
+    cout << "----------------------------------------------------------------------------" << endl;
     cout << "Listado de edificios:\n" << endl;
     cout << "Nombre\t\tPiedra\t\tMadera\t\tMetal\t\tConstruidos\t\tPermitidos restantes" << endl;
     for (int i = 0; i < numberOfBuildings; i++) {
@@ -54,4 +54,88 @@ void listAllBuildings(City* city) {
         cout << buildingTypes[i] -> getRemaining() << endl;
     }
     cout << "----------------------------------------------------------------------------" << endl;
+}
+
+void listBuiltBuildings(City* city) {
+    BuildingType** buildingTypes = city -> getBuildingTypes();
+    int numberOfBuildings = city -> getNumberOfBuilding();
+    cout << "----------------------------------------------------------------------------" << endl;
+    for(int i = 0; i < numberOfBuildings; i++) {
+        if(buildingTypes[i] -> getBuiltAmount() != 0) {
+            cout << buildingTypes[i] -> getName() <<" "<< "\t";
+            cout << buildingTypes[i] -> getBuiltAmount() << "\t\t\t";
+            // FALTA AGREGAR LAS COORDENADAS DONDE ESTÁ CADA EDIFICIO
+        }
+    }
+}
+
+void askForOption(char* option) {
+    cout << "Ingrese el numero de la accion que desea realizar." << endl;
+        cin >> *option;
+}
+
+int castCharToInt(char selectedOption) {
+    return (int)selectedOption - '0';
+}
+
+bool validateSelectedOption(char& selectedOption) {
+    bool validOption = false;
+    int option = 0;
+    if(isdigit(selectedOption)) {
+        option = castCharToInt(selectedOption);
+        if(option > 0 && option <= VALID_OPTIONS)
+            validOption = true;
+    }
+    else 
+        validOption = false;
+    return validOption;
+}
+
+void checkValidOption(char option) {
+    while(!validateSelectedOption(option)) {
+        cout << TXT_RED_196 << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << END_COLOR << endl;
+        askForOption(&option);
+    }
+}
+
+void processOption(City* city, char &option) {
+    switch(castCharToInt(option)) {
+        case BUILD_BY_NAME:
+            //buildByName();
+            break;
+        case LIST_BUILT_BUILDINGS:
+            //listBuilt();
+            break;
+        case LIST_ALL_BUILDINGS:
+            listAllBuildings(city);
+            break;
+        case DEMOLISH_BUILDING_BY_COORDINATES:
+            //demolishByCoordinates();
+            break;
+        case SHOW_MAP:
+            city -> getMap() ->showMap();
+            //showMap();
+            break;
+        case CHECK_COORDINATE:
+            //checkCoordinates();
+            break;
+        case SHOW_INVENTORY:
+            showInventory(city);
+            break;
+        case COLLECT_RESOURCES_PRODUCED:
+            //collectResources();
+            break;
+        case RAIN_OF_RESOURCES:
+            //resourcesRain();
+            break;
+        case QUIT_AND_SAVE:
+            //saveAndExit();
+            break;
+        case QUIT:
+            break;
+        default:
+            cout << "ERROR" << endl;
+            break;
+
+    }
 }

@@ -15,7 +15,8 @@ enum option_t
 	SHOW_INVENTORY 						= 7,
 	COLLECT_RESOURCES_PRODUCED 			= 8,
 	RAIN_OF_RESOURCES 					= 9,
-	QUIT_AND_SAVE 						= 10
+	QUIT_AND_SAVE 						= 10,
+	QUIT 								= 11
 };
 
 const std::string	ROCK 		= "piedra";

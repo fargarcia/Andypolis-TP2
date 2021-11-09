@@ -26,11 +26,12 @@ Template * BuildingType::getTemplate() {
 }
 
 bool BuildingType::addBuilding(){
+    bool success = false;
     if(getRemaining() > 0){
-        built ++;
-        return true;
+        built++;
+        success = true;
     }
-    return false;
+    return success;
 }
 
 void BuildingType::removeBuilding(){

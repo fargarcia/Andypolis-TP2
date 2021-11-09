@@ -13,6 +13,10 @@ City::City(){
     loadLocations(this);
 }
 
+Map* City::getMap() {
+    return map;
+}
+
 int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
     BuildingType* type = buildings -> getBuildingType(name);
     int resourceCheck, availabilityCheck, locationCheck;

@@ -22,6 +22,10 @@ GroundTile::GroundTile() {
     setBuildingAsNull();
 }
 
+Template GroundTile::getBuildingTemplate() {
+    return *building;
+}
+
 void GroundTile::setBuildingAsNull() {
     building = NULL;
     cout << "building " << building << endl;
