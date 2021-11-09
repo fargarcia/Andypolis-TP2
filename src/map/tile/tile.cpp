@@ -13,16 +13,22 @@ std::string Tile::getType(){
     return tileType;
 }
 
+
 LakeTile::LakeTile() {
     setType(LAKE);
 }
 
 GroundTile::GroundTile() {
     setType(GROUND);
+    building = nullptr;
 }
 void GroundTile::addBuilding(Template* buildingTemplate) {
     building = buildingTemplate;
 }
+bool GroundTile::isAvailable(){
+        cout << &building << endl;
+    return (building == NULL);
+};
 
 RoadTile::RoadTile() {
     setType(ROAD);

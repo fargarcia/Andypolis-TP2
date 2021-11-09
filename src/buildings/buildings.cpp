@@ -21,6 +21,12 @@ BuildingType **Buildings::getBuildingTypes(){
   return buildingTypes;
 };
 
+BuildingType * Buildings::getBuildingType(std::string type){
+  int i = 0;
+  while (i < numberOfBuildings && type != buildingTypes[i] -> getName()) i++;
+  return i == numberOfBuildings ? NULL : buildingTypes[i];
+};
+
 void Buildings::addBuildingType(std::string name, int stone, int wood, int metal, int allowedAmount){
   BuildingType **newTypes = new BuildingType *[numberOfBuildings + 1];
   copy(buildingTypes, buildingTypes + numberOfBuildings, newTypes);

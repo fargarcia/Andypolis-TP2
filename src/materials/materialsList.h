@@ -15,6 +15,10 @@ class MaterialsList {
 		// Getters
 		Material ** getMaterials();
 		int getNumberOfMaterials();
+		Material * getMaterial(std::string name);
+		int getAvailableRock();
+		int getAvailableWood();
+		int getAvailableMetal();
 
     // Setters
 		void addMaterial(Material *newMaterial);

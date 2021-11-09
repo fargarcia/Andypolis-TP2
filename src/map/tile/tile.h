@@ -26,6 +26,7 @@ class GroundTile : public Tile {
     public:
         GroundTile();
         void addBuilding(Template* buildingTemplate);
+        bool isAvailable();
 
 };
 

@@ -21,8 +21,6 @@ int main() {
 
   //showMenu();
 
-  //MaterialsList materialsList = MaterialsList();
-  //Buildings buildingsList = Buildings();
   City city = City();
 
   showInventory(&city);
