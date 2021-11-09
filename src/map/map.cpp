@@ -26,3 +26,23 @@ void Map::addTile(int xCoord, int yCoord, std::string tileType)
 Tile& Map::getTile(int xCoord, int yCoord){
     return tiles[xCoord][yCoord];
 }
+
+void Map::setRoadTileAmount(int amount) {
+    roadTileAmount = amount;
+}
+
+int Map::getRoadTileAmount() {
+    return roadTileAmount;
+}
+
+// Funcion para saber cuantos casilleros transitables existen en el mapa
+int Map::countRoadTileAmount(int height, int width, std::string tileType) {
+    int roadTileAmount = 0;
+    for(int i = 0; i < height; i++) {
+        for(int j = 0; j < width; j++) {
+            if(tileType == ROAD)
+            roadTileAmount++;
+        }
+    }
+    return roadTileAmount;
+}

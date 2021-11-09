@@ -26,6 +26,7 @@ void loadMap(Map* map){
     for (int yCoord = 0; yCoord < width; yCoord++){
       mapFile >> tileType;
       map -> addTile(xCoord, yCoord, tileType);
+      map -> setRoadTileAmount(map -> countRoadTileAmount(height, width, tileType));
     }
   }
 }

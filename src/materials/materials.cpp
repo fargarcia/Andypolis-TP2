@@ -9,8 +9,8 @@ Material::Material() {
 	materialName = ' ';
 	materialQuantity = 0;
 }
-// Destructor
 
+// Destructor
 Material::~Material() {}
 
 // Setters
