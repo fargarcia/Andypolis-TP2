@@ -22,12 +22,13 @@ class LakeTile : public Tile {
 
 class GroundTile : public Tile {
     private:
-        Template* building;
+        Template* building = nullptr;
     public:
         GroundTile();
+        void setBuildingAsNull();
+        Template getBuildingTemplate();
         void addBuilding(Template* buildingTemplate);
         bool isAvailable();
-
 };
 
 class RoadTile : public Tile {

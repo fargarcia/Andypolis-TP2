@@ -16,7 +16,10 @@ class City {
         int getNumberOfMaterials();
         BuildingType** getBuildingTypes();
         int getNumberOfBuilding();
+        Map* getMap();
         int addBuilding(std::string name, int xCoord, int yCoord, bool fromFile);
+
+        void materialsRain(Map *map);
 
         int checkResources(std::string type);
         int checkAvailability(std::string type);

@@ -13,16 +13,26 @@ City::City(){
     loadLocations(this);
 }
 
+Map* City::getMap() {
+    return map;
+}
+
 int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
     BuildingType* type = buildings -> getBuildingType(name);
     int resourceCheck, availabilityCheck, locationCheck;
     int response = OK;
-    if (type  == NULL) response = TYPE_NOT_FOUND;
-    if (!response && (availabilityCheck = checkAvailability(name))) response = availabilityCheck;
-    if (!response && (locationCheck = checkLocation(xCoord, yCoord))) response = locationCheck;
-    if (!response && !fromFile && (resourceCheck = checkResources(name)))response = resourceCheck;
+
+    if (type  == NULL) 
+        response = TYPE_NOT_FOUND;
+    if (!response && (availabilityCheck = checkAvailability(name))) 
+        response = availabilityCheck;
+    if (!response && (locationCheck = checkLocation(xCoord, yCoord))) 
+        response = locationCheck;
+    if (!response && !fromFile && (resourceCheck = checkResources(name)))
+        response = resourceCheck;
     if (!response){
         type -> addBuilding();
+
     Template * buildingTemplate = type -> getTemplate();
     static_cast<GroundTile*>(&(map -> getTile(xCoord, yCoord))) -> addBuilding(buildingTemplate);
     }
@@ -52,14 +62,27 @@ int City::checkResources(std::string type){
     if(buildingTemplate -> getStoneQuantity() > materials -> getAvailableRock()) return NOT_ENOUGH_ROCK;
     return OK;
 };
+
 int City::checkAvailability(std::string type){
     return buildings -> getBuildingType(type) -> getRemaining() > 0 ? OK : NOT_AVAILABLE;
 };
+
 int City::checkLocation(int xCoord, int yCoord){
     Tile* tile = &map -> getTile(xCoord, yCoord);
-    if (tile -> getType() != GROUND) return TERRAIN_NOT_SUITALBE;
-    if(!(static_cast<GroundTile*>(tile) ->isAvailable())) return OCUPIED_TILE;
+
+    if (tile -> getType() != GROUND) 
+        return TERRAIN_NOT_SUITALBE;
+// ALDU
+if(static_cast<GroundTile*>(tile) == nullptr) cout << "hola aldu" << endl;
+
+    if(!(static_cast<GroundTile*>(tile) -> isAvailable())) 
+        return OCUPIED_TILE;
     return OK;
 };
 
+void City::materialsRain(Map *map) {
+    //int roadTilesAmount = map -> getRoadTileAmount();
 
+    //rand() % 3;
+
+}

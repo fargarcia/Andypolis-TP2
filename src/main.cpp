@@ -4,6 +4,7 @@
 #include "./buildings/buildings.h"
 #include "./map/map.h"
 #include "./city/city.h"
+#include "./consts/consts.h"
 
 using namespace std;
 
@@ -16,19 +17,20 @@ using namespace std;
 #endif
 
 int main() {
-
-  system(CLR_SCREEN);
-
-  //showMenu();
-
+  char option = 1;
   City city = City();
+
+  while(option != QUIT) {
+      showMenu();
+      askForOption(&option);
+      checkValidOption(option);
+      //system(CLR_SCREEN);
+      processOption(&city, option);
+  }
 
   showInventory(&city);
   //listAllBuildings(&city);
-  
-
-
-
+ 
   return 0;
 
 }
