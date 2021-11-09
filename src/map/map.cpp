@@ -58,30 +58,39 @@ int Map::countRoadTileAmount(int height, int width, std::string tileType) {
     return roadTileAmount;
 }
 
+void Map::printMap(int row, int col) {
+    if(tiles[row][col].getType() == GROUND) {
+    /*
+    ** ESTA COMENTADO PORQUE isAvailable() NO FUNCIONA Y SE ROMPE
+    if(!(static_cast<GroundTile*>(&tiles[i][j])->isAvailable())) {
+        string name = static_cast<GroundTile*>(&tiles[i][j]) -> getBuildingTemplate().getName();
+        // IMPRIMIR LA INICIAL DEL EDIFICIO
+    }*/
+    // MOSTRAR EL CASILLERO EN VERDE
+    cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
+    cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
+    cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
+    }
+    else if(tiles[row][col].getType() == LAKE) {
+        cout << BGND_BLUE_20 << "   " << END_COLOR;
+        cout << BGND_BLUE_20 << "   " << END_COLOR;
+        cout << BGND_BLUE_20 << "   " << END_COLOR;
+    }
+    else if(tiles[row][col].getType() == ROAD) {
+        cout << BGND_DARK_GRAY_237 << "   " << END_COLOR;
+        cout << BGND_DARK_GRAY_237 << "   " << END_COLOR;
+        cout << BGND_DARK_GRAY_237 << "   " << END_COLOR;
+    }
+}
+
 void Map::showMap() {
     for(int i = 0; i < height; i++) {
-        for(int j = 0; j < width; j++) {
-            if(tiles[i][j].getType() == GROUND) {
-                /*
-                ** ESTA COMENTADO PORQUE isAvailable() NO FUNCIONA Y SE ROMPE
-                if(!(static_cast<GroundTile*>(&tiles[i][j])->isAvailable())) {
-                    string name = static_cast<GroundTile*>(&tiles[i][j]) -> getBuildingTemplate().getName();
-                    // IMPRIMIR LA INICIAL DEL EDIFICIO
-                }*/
-                // MOSTRAR EL CASILLERO EN VERDE
-                cout << BGND_DARK_GREEN_22 << "  " << END_COLOR;
-
+        for(int j = 0; j < 3; j++) {
+            for(int k = 0; k < width; k++) {
+                printMap(i, k);
             }
-            else if(tiles[i][j].getType() == LAKE) {
-                cout << BGND_BLUE_20 << "  " << END_COLOR;
-                
-                // MOSTRAR EL CASILLERO EN AZUL
-            }
-            else if(tiles[i][j].getType() == ROAD) {
-                // MOSTRAR EL CASILLERO EN GRIS
-                cout << BGND_DARK_GRAY_237 << "  " << END_COLOR;
-            }
+            cout << endl;
         }
-        cout << endl;
+        //cout << endl;
     }
 }
