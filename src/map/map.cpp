@@ -3,14 +3,16 @@
 #include "../consts/consts.h"
 
 Map::Map(){};
-Map::Map(int height, int width){
+
+void Map::createMap(int height, int width){
     tiles = new Tile*[height];
     for (int i = 0; i < height; ++i)
         tiles[i] = new Tile[width];
     return;
 }
 
-void Map::addTile(int xCoord, int yCoord, std::string tileType){
+void Map::addTile(int xCoord, int yCoord, std::string tileType)
+{
     if (tileType == ROAD) {
         tiles[xCoord][yCoord] = RoadTile();
     } else if (tileType == GROUND) {
@@ -22,6 +24,5 @@ void Map::addTile(int xCoord, int yCoord, std::string tileType){
 }
 
 Tile& Map::getTile(int xCoord, int yCoord){
-    cout << tiles[0] ->getType() << endl;
     return tiles[xCoord][yCoord];
 }

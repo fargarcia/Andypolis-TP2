@@ -21,14 +21,13 @@ void loadMap(Map* map){
   std::string tileType;
   mapFile >> height;
   mapFile >> width;
-  map = new Map(height, width);
+  map->createMap(height, width);
   for (int xCoord = 0; xCoord < height; xCoord++){
     for (int yCoord = 0; yCoord < width; yCoord++){
       mapFile >> tileType;
       map -> addTile(xCoord, yCoord, tileType);
     }
-  } 
-  return;
+  }
 }
 
 void loadMaterials(MaterialsList* materialsList) {

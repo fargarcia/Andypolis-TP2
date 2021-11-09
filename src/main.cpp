@@ -16,7 +16,6 @@ using namespace std;
 #endif
 
 int main() {
-  std::cout << "Hello World!\n";
 
   system(CLR_SCREEN);
 

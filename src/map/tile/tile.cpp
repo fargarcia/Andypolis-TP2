@@ -10,7 +10,6 @@ void Tile::setType(std::string type){
 }
 
 std::string Tile::getType(){
-    cout << "getType" << endl;
     return tileType;
 }
 
