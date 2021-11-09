@@ -1,6 +1,7 @@
 #include <iostream>
 #include "materialsList.h"
 #include "materials.h"
+#include "../consts/consts.h"
 
 using namespace std;
 
@@ -26,3 +27,19 @@ void MaterialsList::addMaterial(Material *newMaterial) {
   materials = newMaterialsVector;
   numberOfMaterials++;
 }
+
+Material * MaterialsList::getMaterial(std::string name){
+  int i = 0;
+  while (i < numberOfMaterials && name != materials[i] -> getName()) i++;
+  return i == numberOfMaterials ? NULL : materials[i];
+};
+
+int  MaterialsList::getAvailableRock(){
+  return getMaterial(ROCK) -> getQuantity();
+};
+int  MaterialsList::getAvailableWood(){
+  return getMaterial(WOOD) -> getQuantity();
+};
+int  MaterialsList::getAvailableMetal(){
+  return getMaterial(METAL) -> getQuantity();
+};

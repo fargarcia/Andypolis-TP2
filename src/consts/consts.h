@@ -18,6 +18,10 @@ enum option_t
 	QUIT_AND_SAVE 						= 10
 };
 
+const std::string	ROCK 		= "piedra";
+const std::string	WOOD 		= "madera";
+const std::string	METAL 		= "metal";
+
 const std::string	MINE 		= "mina";
 const std::string	SAWMILL 	= "aserradero";
 const std::string	FACTORY 	= "fabrica";

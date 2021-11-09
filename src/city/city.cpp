@@ -1,6 +1,7 @@
 #include "city.h"
 #include "./utils/utils.h"
 #include "../consts/consts.h"
+#include "consts/errors.h"
 
 City::City(){
     map = new Map();
@@ -12,26 +13,20 @@ City::City(){
     loadLocations(this);
 }
 
-int City::addBuilding(std::string name, int xCoord, int yCoord){
-    int i = 0;
-    while (
-        i < buildings -> getNumberOfBuilding() && 
-        name != buildings -> getBuildingTypes()[i] -> getName()
-        ) i++;
-    if (i == buildings -> getNumberOfBuilding()) return 0;
-
-    BuildingType* type = buildings -> getBuildingTypes()[i];
-    
-    if (type -> addBuilding()){
-        if (map -> getTile(xCoord, yCoord).getType() == GROUND){
-            Template * buildingTemplate = type -> getTemplate();
-            static_cast<GroundTile*>(&(map -> getTile(xCoord, yCoord))) -> addBuilding(buildingTemplate);
-        } else {
-            type -> removeBuilding();
-            return 0;
-        }
+int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
+    BuildingType* type = buildings -> getBuildingType(name);
+    int resourceCheck, availabilityCheck, locationCheck;
+    int response = OK;
+    if (type  == NULL) response = TYPE_NOT_FOUND;
+    if (!response && (availabilityCheck = checkAvailability(name))) response = availabilityCheck;
+    if (!response && (locationCheck = checkLocation(xCoord, yCoord))) response = locationCheck;
+    if (!response && !fromFile && (resourceCheck = checkResources(name)))response = resourceCheck;
+    if (!response){
+        type -> addBuilding();
+    Template * buildingTemplate = type -> getTemplate();
+    static_cast<GroundTile*>(&(map -> getTile(xCoord, yCoord))) -> addBuilding(buildingTemplate);
     }
-    return 1;
+    return response;
 }
 
 Material** City::getMaterials(){
@@ -46,9 +41,25 @@ BuildingType** City::getBuildingTypes(){
     return buildings -> getBuildingTypes();
 }
 
-int City::getNumberOfBuilding(){
+int City::getNumberOfBuilding(){    
     return buildings -> getNumberOfBuilding();
 }
 
+int City::checkResources(std::string type){
+    Template* buildingTemplate = buildings -> getBuildingType(type) -> getTemplate();
+    if(buildingTemplate -> getMetalQuantity() > materials -> getAvailableMetal()) return NOT_ENOUGH_METAL;
+    if(buildingTemplate -> getWoodQuantity() > materials -> getAvailableWood()) return NOT_ENOUGH_WOOD;
+    if(buildingTemplate -> getStoneQuantity() > materials -> getAvailableRock()) return NOT_ENOUGH_ROCK;
+    return OK;
+};
+int City::checkAvailability(std::string type){
+    return buildings -> getBuildingType(type) -> getRemaining() > 0 ? OK : NOT_AVAILABLE;
+};
+int City::checkLocation(int xCoord, int yCoord){
+    Tile* tile = &map -> getTile(xCoord, yCoord);
+    if (tile -> getType() != GROUND) return TERRAIN_NOT_SUITALBE;
+    if(!(static_cast<GroundTile*>(tile) ->isAvailable())) return OCUPIED_TILE;
+    return OK;
+};
 
 

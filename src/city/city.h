@@ -16,7 +16,11 @@ class City {
         int getNumberOfMaterials();
         BuildingType** getBuildingTypes();
         int getNumberOfBuilding();
-        int addBuilding(std::string name, int xCoord, int yCoord);
+        int addBuilding(std::string name, int xCoord, int yCoord, bool fromFile);
+
+        int checkResources(std::string type);
+        int checkAvailability(std::string type);
+        int checkLocation(int xCoord, int yCoord);
 
 };
 

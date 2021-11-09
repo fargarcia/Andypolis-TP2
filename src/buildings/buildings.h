@@ -14,6 +14,7 @@ class Buildings {
 
 		// Getters
 		BuildingType ** getBuildingTypes();
+		BuildingType * getBuildingType(std::string type);
 		int getNumberOfBuilding();
 
     // Setters
