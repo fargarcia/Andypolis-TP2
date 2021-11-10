@@ -24,7 +24,7 @@ int main() {
       showMenu();
       requestOption(&option);
       validateSelectedOption(option);
-      system(CLR_SCREEN);
+      //system(CLR_SCREEN);
       processOption(&city, option);
   }
  
