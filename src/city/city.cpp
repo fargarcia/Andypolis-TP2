@@ -81,7 +81,34 @@ if(static_cast<GroundTile*>(tile) == nullptr) cout << "hola aldu" << endl;
 };
 
 void City::materialsRain(Map *map) {
-    //int roadTilesAmount = map -> getRoadTileAmount();
+    int roadTilesAmount = map -> getRoadTileAmount();
+    /*
+    Piedra: 1 o 2 
+    Madera: 0 o 1
+    Metal: 2, 3 o 4
+
+    1) Tengo la cantidad de casilleros transitables si es menor a 3 no puedo hacer la lluvia (informarlo)
+    2) Hago un rand() para saber cuantos materiales voy a poner (minimo 3 (1 piedra y 2 metales), maximo 7)
+    3) Hago un rand() entre los casilleros para ver en cual voy a poner el material y guardo el numero en un vector
+    4) Recorro el mapa hasta encontrar el casillero que salio en el rand() y elimino ese numero de los casilleros posibles
+    5) Hago un rand() entre 1 piedra y 2 metales a ver cual voy a colocar en el casillero que salio
+    6) Coloco el material en el casillero    
+    7) Hago un rand entre lo que quedo en 5) y vuelvo a hacer un rand para ver en que casillero ponerlo
+    8) Hago un rand para ver donde poner el material que quedo en 7)
+    9) Si el rand() de la cantidad de materiales a poner es mayor a 3 y menor a 7, vuelvo a hacer un rand para encontrar un casillero
+    10) Hago un rand() para elegir que material va a ir en el casillero
+    11) Recorro el mapa para encontrar el casillero  y elimino ese numero de los casilleros posibles
+    12) Repito pasos del 9) al 11)
+
+
+
+    Generar 1 materialList vacio (vector de materiales)
+    Generar entre 1 y 2 de piedra, 0 y 1 de madera, y 2, 3, 4 de metal
+    Hago un while recorriendo el mapa para ver si pongo o no un material en el casillero
+    
+
+
+    */
 
     //rand() % 3;
 
