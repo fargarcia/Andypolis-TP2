@@ -22,14 +22,20 @@ int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
     int resourceCheck, availabilityCheck, locationCheck;
     int response = OK;
 
-    if (type  == NULL) response = TYPE_NOT_FOUND;
-    if (!response && (availabilityCheck = checkAvailability(name))) response = availabilityCheck;
-    if (!response && (locationCheck = checkLocation(xCoord, yCoord))) response = locationCheck;
-    if (!response && !fromFile && (resourceCheck = checkResources(name)))response = resourceCheck;
-    if (!response){type -> addBuilding();
-    Template * buildingTemplate = type -> getTemplate();
-    static_cast<GroundTile*>(map -> getTile(xCoord, yCoord)) -> addBuilding(buildingTemplate);
+    if (type  == NULL) 
+        response = TYPE_NOT_FOUND;
+    if (!response && (availabilityCheck = checkAvailability(name))) 
+        response = availabilityCheck;
+    if (!response && (locationCheck = checkLocation(xCoord, yCoord))) 
+        response = locationCheck;
+    if (!response && !fromFile && (resourceCheck = checkResources(name)))
+        response = resourceCheck;
+    if (!response){
+        type -> addBuilding();
+        Template * buildingTemplate = type -> getTemplate();
+        static_cast<GroundTile*>(map -> getTile(xCoord, yCoord)) -> addBuilding(buildingTemplate);
     }
+    
     return response;
 }
 
