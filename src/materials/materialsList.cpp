@@ -30,15 +30,8 @@ void MaterialsList::addMaterial(Material *newMaterial) {
 
 Material* MaterialsList::getMaterial(std::string name){
   int i = 0;
-  cout << "number of materials" << numberOfMaterials << endl;
-  while (i < numberOfMaterials && name != materials[i] -> getName()) {
-
-      cout << "nombre:: " << name << endl;
-      cout << "nombre" << materials[i] -> getName() << endl;
+  while (i < numberOfMaterials && name != materials[i] -> getName()) 
       i++;
-      cout << "i:" << i << endl;
-  }
-  cout << i << endl;
   return i == numberOfMaterials ? NULL : materials[i];
 };
 
@@ -53,13 +46,7 @@ int  MaterialsList::getAvailableMetal(){
 };
 
 void MaterialsList::increaseMaterial(std::string name, int amount){
-  cout << "a" << endl;
   Material* material = getMaterial(name);
-  cout << "b" << endl;
-  cout << name << endl;;
-  cout << material -> getQuantity()<< endl;
   int newAmount = material -> getQuantity() + amount;
-  cout << "c" << endl;
   material -> setQuantity(newAmount);
-  cout << "d" << endl;
 }

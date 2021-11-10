@@ -14,9 +14,9 @@ City::City(){
 }
 
 City::~City(){
-    saveBuildings(this);
-    saveMaterials(this);
-    saveMap(this);
+    //saveBuildings(this);
+    //saveMaterials(this);
+    //saveMap(this);
     saveLocations(this);
 }
 
@@ -47,29 +47,19 @@ int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
 }
 
 bool City::removeBuilding(int xCoord, int yCoord){
-    cout << "En removeBuilding" << endl;
     Tile* tile = map -> getTile(xCoord, yCoord);
     int status = false;
     if(tile -> getType() == GROUND){
-        cout << "Adento del primer if" << endl;
         GroundTile* groundTile = static_cast<GroundTile*>(tile);
         if(!groundTile -> isAvailable()){
-            cout << "Adento del segundo if" << endl;
             Template buildingTemplate = groundTile -> getBuildingTemplate();
-            cout << "aaaa" << endl;
             materials -> increaseMaterial(ROCK, buildingTemplate.getStoneQuantity()/2);
-            cout << "Despues de incrementar piedra" << endl;
             materials -> increaseMaterial(METAL, buildingTemplate.getMetalQuantity()/2);
-            cout << "Despues de incrementar metal" << endl;
             materials -> increaseMaterial(WOOD, buildingTemplate.getWoodQuantity()/2);
-            cout << "Despues de incrementar madera" << endl;
             buildings -> getBuildingType(buildingTemplate.getName()) -> removeBuilding();
-            cout << "Despues de getBuildingType" << endl;
             groundTile -> removeBuilding();
-            cout << "Despues de removeBuilding" << endl;
             status = true;
         }
-        cout << "Afuera del segundo if" << endl;
     }
     return status;
 }

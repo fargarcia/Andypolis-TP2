@@ -60,6 +60,8 @@ void listAllBuildings(City* city);
 // Post: Muestra todos los materiales que se tienen en el momento
 void showInventory(City* city);
 
+void printError(int error);
+
 
 /*
 * ESTAS FUNCIONES NO ESTAN EN EL ARCHIVO utils.cpp

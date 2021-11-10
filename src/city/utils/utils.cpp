@@ -85,7 +85,6 @@ void loadLocations(City* city){
     int buildingError = city -> addBuilding(name, trimCoords(xCoord), trimCoords(yCoord), true);
     if (buildingError) {
       cout << "No se pudo crear el edifcio " << name << buildingError << endl;
-      // agregar una funcion que te printee el error 
     }
   }
 }
@@ -100,10 +99,10 @@ void saveBuildings(City* city) {
     BuildingType** buildingTypes = city -> getBuildingTypes();
     int numberOfBuildings = city -> getNumberOfBuilding();
     for(int i = 0; i < numberOfBuildings; i++) {
-        buildingsFile << buildingTypes[i] -> getName() <<" "<< "\t";
-        buildingsFile << buildingTypes[i] -> getTemplate() -> getStoneQuantity();
-        buildingsFile << buildingTypes[i] -> getTemplate() -> getWoodQuantity();
-        buildingsFile << buildingTypes[i] -> getTemplate() -> getMetalQuantity();
+        buildingsFile << buildingTypes[i] -> getName() << " ";
+        buildingsFile << buildingTypes[i] -> getTemplate() -> getStoneQuantity() << " ";
+        buildingsFile << buildingTypes[i] -> getTemplate() -> getWoodQuantity() << " ";
+        buildingsFile << buildingTypes[i] -> getTemplate() -> getMetalQuantity() << " ";
         buildingsFile << buildingTypes[i] -> getBuiltAmount() + buildingTypes[i] -> getRemaining() << "\t\t\t";
     }
     buildingsFile.close();
@@ -143,7 +142,7 @@ void saveMap(City* city) {
             else if(tileType == ROAD)
                 mapFile << "C" << " ";
         }
-        cout << endl;
+        mapFile << endl;
     }
     mapFile.close();
 }
@@ -156,13 +155,16 @@ void saveLocations(City* city) {
     }
     int height = city -> getMap() -> getHeight();
     int width = city -> getMap() -> getWidth();
-    for(int i = 0; i < height; i++) {
-        for(int j = 0; j < width; j++) {
-            Tile * tile = city -> getMap() -> getTile(i, j);
-            bool available = (static_cast<GroundTile*>(tile) -> isAvailable());
-            if(tile -> getType() == GROUND && !available) {
-                locationsFile << city -> getBuildingName(i, j) << endl;
-                locationsFile << " (" << i << ", " << j << ")" << endl;
+    for(int x = 0; x < height; x++) {
+        for(int y = 0; y < width; y++) {
+            Tile * tile = city -> getMap() -> getTile(x, y);
+            if(tile -> getType() == GROUND) {
+              GroundTile* groundTile = static_cast<GroundTile*>(tile);
+              if(groundTile -> isAvailable() == false){
+                locationsFile << groundTile -> getBuildingTemplate().getName();
+                locationsFile << " (" << x << ", " << y << ")" << endl;
+                }
+                
             }  
         }
     }

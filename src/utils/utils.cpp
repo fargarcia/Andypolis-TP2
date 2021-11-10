@@ -13,6 +13,7 @@
 #include "../consts/colors.h"
 #include "../map/map.h"
 #include "../city/utils/paths.h"
+#include "../city/consts/errors.h"
 
 using namespace std;
 
@@ -59,18 +60,24 @@ void listAllBuildings(City* city) {
 }
 
 void listBuiltBuildings(City* city) {
-    BuildingType** buildingTypes = city -> getBuildingTypes();
-    int numberOfBuildings = city -> getNumberOfBuilding();
-    cout << "----------------------------------------------------------------------------" << endl;
-    for(int i = 0; i < numberOfBuildings; i++) {
-        cout << "building amount" << buildingTypes[i] -> getBuiltAmount() << endl;
-        if(buildingTypes[i] -> getBuiltAmount() != 0) {
-            cout << buildingTypes[i] -> getName() <<" "<< "\t";
-            cout << buildingTypes[i] -> getBuiltAmount() << "\t\t\t";
-            // FALTA AGREGAR LAS COORDENADAS DONDE ESTÁ CADA EDIFICIO
+    cout << "----------------------" << endl;
+    cout << "Edificios construidos:\n" << endl;
+    int height = city -> getMap() -> getHeight();
+    int width = city -> getMap() -> getWidth();
+    for(int x = 0; x < height; x++) {
+        for(int y = 0; y < width; y++) {
+            Tile * tile = city -> getMap() -> getTile(x, y);
+            if(tile -> getType() == GROUND) {
+              GroundTile* groundTile = static_cast<GroundTile*>(tile);
+              if(groundTile -> isAvailable() == false){
+                cout << groundTile -> getBuildingTemplate().getName();
+                cout << " (" << x << ", " << y << ")" << endl;
+                }
+                
+            }  
         }
     }
-    cout << "----------------------------------------------------------------------------" << endl;
+    cout << "----------------------" << endl;
 }
 
 void requestOption(int* option) {
@@ -160,7 +167,6 @@ void requestCoord(int* coord, char axe) {
 }
 
 bool isValidCoord(int coord, int max, char axe) {
-    cout << "en isValidCoord" << endl;
     bool validOption = false;
     while(validOption == false) {
         if(cin.fail()) {
@@ -208,25 +214,20 @@ bool confirmActionRequest(string name, string action, int xCoord, int yCoord) {
 }
 
 void buildByName(City* city) {
-  cout << "En buildByName" << endl;
     string name;
     RequestBuildingName(&name);
     while(!(isValidBuildingName(name))) {
-        cout << "Error, el nombre ingresado no es valido, por favor ingreselo nuevamente" << endl;
         RequestBuildingName(&name);
     }
 
     int xCoord, yCoord;
-    cout << "Pido x" << endl;
     requestCoord(&xCoord, 'x');
-    cout << "Pido y" << endl;
     requestCoord(&yCoord, 'y');
     
     while(!(areValidCoords(xCoord, yCoord, city)));
         
     if(confirmActionRequest(name, "construir", xCoord, yCoord)) {
-        city -> addBuilding(name, xCoord, yCoord, false);
-        cout << "Se ha construido un " << name << " en (" << xCoord << ", " << yCoord << ")" << endl;
+        printError(city -> addBuilding(name, xCoord, yCoord, false));
     }
 }
 
@@ -240,8 +241,38 @@ void demolishByCoordinates(City* city) {
     string name = city -> getBuildingName(xCoord, yCoord);
 
     if(confirmActionRequest(name, "demoler", xCoord, yCoord)) {
-        cout << "Adentro del if" << endl;
-        city -> removeBuilding(xCoord, yCoord);
-        cout << "Se ha demolido un " << name << " en (" << xCoord << ", " << yCoord << ")" << endl;
+        if(city -> removeBuilding(xCoord, yCoord)){
+            cout << "Se ha demolido un " << name << " en (" << xCoord << ", " << yCoord << ")" << endl;
+        } else {
+            cout << "No hay un edificio en esa coordenada "<< endl;
+        }
+    }
+}
+
+void printError(int error){
+    switch (error){
+    case NOT_ENOUGH_WOOD:
+        cout << "No hay madera suficiente para construir el edificio" << endl;
+        break;
+    case NOT_ENOUGH_ROCK:
+        cout << "No hay piedra suficiente para construir el edificio" << endl;
+        break;
+    case NOT_ENOUGH_METAL:
+        cout << "No hay metal suficiente para construir el edificio" << endl;
+        break;
+    case NOT_AVAILABLE:
+        cout << "No se pueden construir más edicfios de este tipo" << endl;
+        break;
+    case TERRAIN_NOT_SUITALBE:
+        cout << "No se pueden construir edificios en este casillero" << endl;
+        break;
+    case OCUPIED_TILE:
+        cout << "Ya existe un edificio en este casillero" << endl;
+        break;
+    case TYPE_NOT_FOUND:
+        cout << "No existen edicfios de este tipo" << endl;
+        break;   
+    default:
+        break;
     }
 }
