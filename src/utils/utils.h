@@ -26,6 +26,14 @@ void RequestCoord(int* xCoord, int* yCoord);
 // Pre: Recibir las coordenadas y un puntero a la ciudad
 // Post: Devuelve true si las coordenadas son correctas y false en caso contrario
 bool isValidCoord(int xCoord, int yCoord, City* city);
+// Pre: -
+// Post: Devuelve true si el usuario confirma que desea construir el edificio y 
+// false en caso contrario
+bool confirmBuildingRequest(string name, int xCoord, int yCoord);
+// Pre: -
+// Post: Devuelve true si el usuario confirma que desea demoler el edificio y 
+// false en caso contrario
+bool confirmDemolishionRequest(string name, int xCoord, int yCoord);
 // Pre: Recibir la opcion seleccionada
 // Post: Valida que la opcion seleccionada sea correcta, es decir, 
 // que se encuentre dentro de los limites de opciones y que sea un numero
@@ -73,7 +81,7 @@ void showInventory(City* city);
 
 // Pre: Recibir el nombre del edificio que se desee crear
 // Post: Crea un edificio con el nombre recibido
-void buildByName();
+void buildByName(City* city);
 // Pre: Recibir coordenadas validas
 // Post: Destruye el edificio ubicado en las coordenadas recibidas
 void demolishByCoordinates();

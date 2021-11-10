@@ -98,7 +98,7 @@ void validateSelectedOption(int& selectedOption) {
 void processOption(City* city, int &option) {
     switch(option) {
         case BUILD_BY_NAME:
-            //buildByName();
+            buildByName(city);
             break;
         case LIST_BUILT_BUILDINGS:
             listBuiltBuildings(city);
@@ -172,6 +172,36 @@ bool isValidCoord(int xCoord, int yCoord, City* city) {
         isValid = false;
 
     return isValid;
+}
+
+bool confirmBuildingRequest(string name, int xCoord, int yCoord) {
+    int option = ERROR;
+    bool confirmation = false;
+    while(option != 1 && option != 2) {
+        cout << "¿Esta seguro que desea construir el edificio " << name << 
+        " en " << "la posicion (" << xCoord << ", " << yCoord << ")" << "?" << endl;
+        cout << "\t 1. Si" << endl;
+        cout << "\t 2. No" << endl;
+        cin >> option;
+        if(option == 1)
+            confirmation = true;
+    }
+    return confirmation;
+}
+
+bool confirmDemolishionRequest(string name, int xCoord, int yCoord) {
+    int option = ERROR;
+    bool confirmation = false;
+    while(option != 1 && option != 2) {
+        cout << "¿Esta seguro que desea demoler el edificio " << name << 
+        " en " << "la posicion (" << xCoord << ", " << yCoord << ")" << "?" << endl;
+        cout << "\t 1. Si" << endl;
+        cout << "\t 2. No" << endl;
+        cin >> option;
+        if(option == 1)
+            confirmation = true;
+    }
+    return confirmation;
 }
 
 void saveAndQuit(City* city) {
@@ -260,4 +290,26 @@ void saveLocations(City* city) {
         }
     }
     locationsFile.close();
+}
+
+void buildByName(City* city) {
+  cout << "En buildByName" << endl;
+    string name;
+    RequestBuildingName(&name);
+    while(!(isValidBuildingName(name))) {
+        cout << "Error, el nombre ingresado no es valido, por favor ingreselo nuevamente" << endl;
+        RequestBuildingName(&name);
+    }
+
+    int xCoord, yCoord;
+    RequestCoord(&xCoord, &yCoord);
+    while(!(isValidCoord(xCoord, yCoord, city))) {
+        cout << "Error, las coordenadas ingresadas no son validas, por favor ingreselas nuevamente" << endl;
+        RequestCoord(&xCoord, &yCoord);
+    }
+        
+    if(confirmDemolishionRequest(name, xCoord, yCoord)) {
+        city -> addBuilding(name, xCoord, yCoord, false);
+        cout << "Se ha construido un " << name << " en (" << xCoord << ", " << yCoord << ")" << endl;
+    }
 }
