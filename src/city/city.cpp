@@ -136,7 +136,7 @@ void City::collectResources(){
         }
     }
 }
-    
+ 
 std::string City::getBuildingName(int xCoord, int yCoord) {
     Tile* tile = map -> getTile(xCoord, yCoord);
     GroundTile* groundTile = static_cast<GroundTile*>(tile);
