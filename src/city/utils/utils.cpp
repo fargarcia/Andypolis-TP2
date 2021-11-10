@@ -44,7 +44,7 @@ void loadMaterials(MaterialsList* materialsList) {
     int materialQuantity;
     while (materialsFile >> name) {
         newMaterial = new Material();
-        newMaterial->setName(name);
+        newMaterial-> setName(name);
         materialsFile >> materialQuantity;
         newMaterial->setQuantity(materialQuantity);
         materialsList->addMaterial(newMaterial);

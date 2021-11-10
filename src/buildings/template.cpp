@@ -36,3 +36,8 @@ int Template::getWoodQuantity() {
 int Template::getMetalQuantity() {
   	return metalQuantity;
 }
+
+void Template::collectResource(std::string& name, int& amount){
+	name = resourceProduced;
+	amount = amountProduced;
+}
