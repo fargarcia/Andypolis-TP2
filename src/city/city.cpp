@@ -13,6 +13,13 @@ City::City(){
     loadLocations(this);
 }
 
+City::~City(){
+    saveBuildings(this);
+    saveMaterials(this);
+    saveMap(this);
+    saveLocations(this);
+}
+
 Map* City::getMap() {
     return map;
 }
@@ -40,19 +47,29 @@ int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
 }
 
 bool City::removeBuilding(int xCoord, int yCoord){
+    cout << "En removeBuilding" << endl;
     Tile* tile = map -> getTile(xCoord, yCoord);
     int status = false;
     if(tile -> getType() == GROUND){
+        cout << "Adento del primer if" << endl;
         GroundTile* groundTile = static_cast<GroundTile*>(tile);
         if(!groundTile -> isAvailable()){
+            cout << "Adento del segundo if" << endl;
             Template buildingTemplate = groundTile -> getBuildingTemplate();
+            cout << "aaaa" << endl;
             materials -> increaseMaterial(ROCK, buildingTemplate.getStoneQuantity()/2);
+            cout << "Despues de incrementar piedra" << endl;
             materials -> increaseMaterial(METAL, buildingTemplate.getMetalQuantity()/2);
+            cout << "Despues de incrementar metal" << endl;
             materials -> increaseMaterial(WOOD, buildingTemplate.getWoodQuantity()/2);
+            cout << "Despues de incrementar madera" << endl;
             buildings -> getBuildingType(buildingTemplate.getName()) -> removeBuilding();
+            cout << "Despues de getBuildingType" << endl;
             groundTile -> removeBuilding();
+            cout << "Despues de removeBuilding" << endl;
             status = true;
         }
+        cout << "Afuera del segundo if" << endl;
     }
     return status;
 }
@@ -93,9 +110,13 @@ int City::checkLocation(int xCoord, int yCoord){
     return status;
 };
 
+std::string City::getBuildingName(int xCoord, int yCoord) {
+    Tile* tile = map -> getTile(xCoord, yCoord);
+    GroundTile* groundTile = static_cast<GroundTile*>(tile);
+    return  groundTile -> getBuildingTemplate().getName();
+}
 
-
-void City::materialsRain(Map *map) {
+void City::materialsRain() {
     //int roadTilesAmount = map -> getRoadTileAmount();
     /*
     Piedra: 1 o 2 
