@@ -19,6 +19,7 @@ class MaterialsList {
 		int getAvailableRock();
 		int getAvailableWood();
 		int getAvailableMetal();
+		void increaseMaterial(std::string name, int amount);
 
     // Setters
 		void addMaterial(Material *newMaterial);
