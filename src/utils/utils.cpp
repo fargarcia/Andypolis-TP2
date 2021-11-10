@@ -228,7 +228,7 @@ void saveMap(City* city) {
     mapFile << height << " " << width << endl;
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-            string tileType = city -> getMap() -> getTile(i, j).getType();
+            string tileType = city -> getMap() -> getTile(i, j) -> getType();
             if(tileType == LAKE) 
                 mapFile << "L" << " ";
             else if(tileType == GROUND) 
@@ -252,9 +252,9 @@ void saveLocations(City* city) {
     int width = city -> getMap() -> getWidth();
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-            string tileType = city -> getMap() -> getTile(i, j).getType();
-            if(tileType == GROUND && (!(static_cast<GroundTile*>(&(city -> getMap() -> getTile(i, j)))->isAvailable()))) {
-                locationsFile << static_cast<GroundTile*>(&(city -> getMap() -> getTile(i, j))) -> getBuildingTemplate().getName();
+            string tileType = city -> getMap() -> getTile(i, j) -> getType();
+            if(tileType == GROUND && (!(static_cast<GroundTile*>(city -> getMap() -> getTile(i, j))->isAvailable()))) {
+                locationsFile << static_cast<GroundTile*>(city -> getMap() -> getTile(i, j)) -> getBuildingTemplate().getName();
                 locationsFile << " (" << i << ", " << j << ")" << endl;
             }  
         }

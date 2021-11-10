@@ -22,19 +22,13 @@ int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
     int resourceCheck, availabilityCheck, locationCheck;
     int response = OK;
 
-    if (type  == NULL) 
-        response = TYPE_NOT_FOUND;
-    if (!response && (availabilityCheck = checkAvailability(name))) 
-        response = availabilityCheck;
-    if (!response && (locationCheck = checkLocation(xCoord, yCoord))) 
-        response = locationCheck;
-    if (!response && !fromFile && (resourceCheck = checkResources(name)))
-        response = resourceCheck;
-    if (!response){
-        type -> addBuilding();
-
+    if (type  == NULL) response = TYPE_NOT_FOUND;
+    if (!response && (availabilityCheck = checkAvailability(name))) response = availabilityCheck;
+    if (!response && (locationCheck = checkLocation(xCoord, yCoord))) response = locationCheck;
+    if (!response && !fromFile && (resourceCheck = checkResources(name)))response = resourceCheck;
+    if (!response){type -> addBuilding();
     Template * buildingTemplate = type -> getTemplate();
-    static_cast<GroundTile*>(&(map -> getTile(xCoord, yCoord))) -> addBuilding(buildingTemplate);
+    static_cast<GroundTile*>(map -> getTile(xCoord, yCoord)) -> addBuilding(buildingTemplate);
     }
     return response;
 }
@@ -68,20 +62,17 @@ int City::checkAvailability(std::string type){
 };
 
 int City::checkLocation(int xCoord, int yCoord){
-    Tile* tile = &map -> getTile(xCoord, yCoord);
-
-    if (tile -> getType() != GROUND) 
-        return TERRAIN_NOT_SUITALBE;
-// ALDU
-if(static_cast<GroundTile*>(tile) == nullptr) cout << "hola aldu" << endl;
-
-    if(!(static_cast<GroundTile*>(tile) -> isAvailable())) 
-        return OCUPIED_TILE;
-    return OK;
+    Tile* tile = map -> getTile(xCoord, yCoord);
+    int status = OK;
+    if(tile -> getType() != GROUND) status =  TERRAIN_NOT_SUITALBE;
+    if(status && !(static_cast<GroundTile*>(tile) -> isAvailable())) status = OCUPIED_TILE;
+    return status;
 };
 
+
+
 void City::materialsRain(Map *map) {
-    int roadTilesAmount = map -> getRoadTileAmount();
+    //int roadTilesAmount = map -> getRoadTileAmount();
     /*
     Piedra: 1 o 2 
     Madera: 0 o 1

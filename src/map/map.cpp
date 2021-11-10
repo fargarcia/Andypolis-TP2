@@ -42,8 +42,8 @@ void Map::addTile(int xCoord, int yCoord, std::string tileType)
     return;
 }
 
-Tile& Map::getTile(int xCoord, int yCoord){
-    return tiles[xCoord][yCoord];
+Tile* Map::getTile(int xCoord, int yCoord){
+    return &tiles[xCoord][yCoord];
 }
 
 void Map::setRoadTileAmount(int amount) {

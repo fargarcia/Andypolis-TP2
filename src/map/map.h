@@ -19,7 +19,7 @@ class Map {
         int getWidth();
         void createMap(int height, int width);
         void addTile(int xCoord, int yCoord, std::string tileType);
-        Tile& getTile(int xCoord, int yCoord);
+        Tile* getTile(int xCoord, int yCoord);
         void setRoadTileAmount(int amount);
         int countRoadTileAmount(int height, int width, std::string tileType);
         int getRoadTileAmount();
