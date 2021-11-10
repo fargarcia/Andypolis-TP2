@@ -13,6 +13,14 @@ void Map::setWidth(int newWidth) {
     width = newWidth;
 }
 
+int Map::getHeight() {
+    return height;
+}
+
+int Map::getWidth() {
+    return width;
+}
+
 void Map::createMap(int newHeight, int newWidth){
     setHeight(newHeight);
     setWidth(newWidth);
@@ -66,7 +74,6 @@ void Map::printMap(int row, int col) {
         string name = static_cast<GroundTile*>(&tiles[i][j]) -> getBuildingTemplate().getName();
         // IMPRIMIR LA INICIAL DEL EDIFICIO
     }*/
-    // MOSTRAR EL CASILLERO EN VERDE
     cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
     cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
     cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
@@ -91,6 +98,5 @@ void Map::showMap() {
             }
             cout << endl;
         }
-        //cout << endl;
     }
 }

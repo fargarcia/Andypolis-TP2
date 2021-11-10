@@ -22,7 +22,7 @@ int main() {
 
   while(option != QUIT) {
       showMenu();
-      askForOption(&option);
+      requestOption(&option);
       validateSelectedOption(option);
       system(CLR_SCREEN);
       processOption(&city, option);

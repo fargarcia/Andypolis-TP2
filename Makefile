@@ -39,7 +39,7 @@ tile.o: src/map/tile/tile.cpp src/map/tile/tile.h
 	$(CC) -o tile.o -c src/map/tile/tile.cpp	
 
 valgrind:
-	valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./main
+	valgrind --tool=memcheck --error-exitcode=1 --leak-check=full --show-leak-kinds=all ./andypolis
 
 run: 
 	./andypolis
