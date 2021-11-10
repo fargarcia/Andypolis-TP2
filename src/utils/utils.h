@@ -21,22 +21,21 @@ void RequestBuildingName(string* buildingName);
 // Post: Devuelve true si el nombre es correcto y false en caso contrario
 bool isValidBuildingName(string buildingName);
 // Pre: -
-// Post: Solicita al usuario que ingrese las coordenadas x e y
-void RequestCoord(int* xCoord, int* yCoord);
+// Post: Solicita al usuario que ingrese una coordenada
+void requestCoord(int* coord, char axe);
+// Pre: Recibir la coordenada, el maximo de la matriz, y el eje
+// Post: Devuelve true si la coordenada es correctas y false en caso contrario
+bool isValidCoord(int coord, int max, char axe);
 // Pre: Recibir las coordenadas y un puntero a la ciudad
-// Post: Devuelve true si las coordenadas son correctas y false en caso contrario
-bool isValidCoord(int xCoord, int yCoord, City* city);
+// Post: Devuelve true si las coordenadas son validas y false en caso contrario
+bool areValidCoords(int xCoord, int yCoord, City* city);
 // Pre: -
-// Post: Devuelve true si el usuario confirma que desea construir el edificio y 
-// false en caso contrario
-bool confirmBuildingRequest(string name, int xCoord, int yCoord);
+// Post: Devuelve true si el usuario confirma que desea construir o demoler el 
+// edificio y false en caso contrario
+bool confirmActionRequest(string name, string action, int xCoord, int yCoord);
 // Pre: -
 // Post: Devuelve true si el usuario confirma que desea demoler el edificio y 
 // false en caso contrario
-bool confirmDemolishionRequest(string name, int xCoord, int yCoord);
-// Pre: Recibir la opcion seleccionada
-// Post: Valida que la opcion seleccionada sea correcta, es decir, 
-// que se encuentre dentro de los limites de opciones y que sea un numero
 void validateSelectedOption(int& selectedOption);
 // Pre: Recibir un puntero a la ciudad, y la opcion seleccionada
 // Post: Se encarga de invocar a distintas funciones dependiendo de la opcion 
@@ -71,7 +70,7 @@ void showInventory(City* city);
 void buildByName(City* city);
 // Pre: Recibir coordenadas validas
 // Post: Destruye el edificio ubicado en las coordenadas recibidas
-void demolishByCoordinates();
+void demolishByCoordinates(City* city);
 // Pre: -
 // Post: 
 void showMap();

@@ -18,6 +18,7 @@ class City {
         BuildingType** getBuildingTypes();
         int getNumberOfBuilding();
         Map* getMap();
+        std::string getBuildingName(int xCoord, int yCoord);
         int addBuilding(std::string name, int xCoord, int yCoord, bool fromFile);
         bool removeBuilding(int xCoord, int yCoord);
 

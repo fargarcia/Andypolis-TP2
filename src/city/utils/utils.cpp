@@ -34,8 +34,10 @@ void loadMap(Map* map){
 
 void loadMaterials(MaterialsList* materialsList) {
   fstream materialsFile(PATH_MATERIALS, ios::in);
-    if (!materialsFile.is_open())
+    if (!materialsFile.is_open()) {
         cout << "File not found: " << PATH_MATERIALS << endl;
+        return;
+    }
     
     Material* newMaterial;
     string name;
@@ -89,7 +91,7 @@ void loadLocations(City* city){
 }
 
 void saveBuildings(City* city) {
-    fstream buildingsFile(PATH_BUILDINGS, ios::trunc);
+    fstream buildingsFile(PATH_BUILDINGS, ios::out);
     if(!(buildingsFile.is_open())) {
         cout  << "No se pudo abrir el archivo " << PATH_BUILDINGS << " para guardar los datos."  << endl;
         return;
@@ -98,19 +100,17 @@ void saveBuildings(City* city) {
     BuildingType** buildingTypes = city -> getBuildingTypes();
     int numberOfBuildings = city -> getNumberOfBuilding();
     for(int i = 0; i < numberOfBuildings; i++) {
-        if(buildingTypes[i] -> getBuiltAmount() != 0) {
-            buildingsFile << buildingTypes[i] -> getName() <<" "<< "\t";
-            buildingsFile << buildingTypes[i] -> getTemplate() -> getStoneQuantity();
-            buildingsFile << buildingTypes[i] -> getTemplate() -> getWoodQuantity();
-            buildingsFile << buildingTypes[i] -> getTemplate() -> getMetalQuantity();
-            buildingsFile << buildingTypes[i] -> getBuiltAmount() + buildingTypes[i] -> getRemaining() << "\t\t\t";
-        }
+        buildingsFile << buildingTypes[i] -> getName() <<" "<< "\t";
+        buildingsFile << buildingTypes[i] -> getTemplate() -> getStoneQuantity();
+        buildingsFile << buildingTypes[i] -> getTemplate() -> getWoodQuantity();
+        buildingsFile << buildingTypes[i] -> getTemplate() -> getMetalQuantity();
+        buildingsFile << buildingTypes[i] -> getBuiltAmount() + buildingTypes[i] -> getRemaining() << "\t\t\t";
     }
     buildingsFile.close();
 }
 
 void saveMaterials(City* city) {
-    fstream materialsFile(PATH_MATERIALS, ios::trunc);
+    fstream materialsFile(PATH_MATERIALS, ios::out);
     if(!(materialsFile.is_open())) {
         cout  << "No se pudo abrir el archivo " << PATH_MATERIALS << " para guardar los datos."  << endl;
         return;
@@ -124,7 +124,7 @@ void saveMaterials(City* city) {
 }
 
 void saveMap(City* city) {
-    fstream mapFile(PATH_MAP, ios::trunc);
+    fstream mapFile(PATH_MAP, ios::out);
     if(!(mapFile.is_open())) {
         cout  << "No se pudo abrir el archivo " << PATH_MAP << " para guardar los datos."  << endl;
         return;
@@ -149,19 +149,19 @@ void saveMap(City* city) {
 }
 
 void saveLocations(City* city) {
-    fstream locationsFile(PATH_LOCATIONS, ios::trunc);
+    fstream locationsFile(PATH_LOCATIONS, ios::out);
     if(!(locationsFile.is_open())) {
         cout  << "No se pudo abrir el archivo " << PATH_LOCATIONS << " para guardar los datos."  << endl;
         return;
     }
-
     int height = city -> getMap() -> getHeight();
     int width = city -> getMap() -> getWidth();
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-            string tileType = city -> getMap() -> getTile(i, j) -> getType();
-            if(tileType == GROUND && (!(static_cast<GroundTile*>(city -> getMap() -> getTile(i, j))->isAvailable()))) {
-                locationsFile << static_cast<GroundTile*>(city -> getMap() -> getTile(i, j)) -> getBuildingTemplate().getName();
+            Tile * tile = city -> getMap() -> getTile(i, j);
+            bool available = (static_cast<GroundTile*>(tile) -> isAvailable());
+            if(tile -> getType() == GROUND && !available) {
+                locationsFile << city -> getBuildingName(i, j) << endl;
                 locationsFile << " (" << i << ", " << j << ")" << endl;
             }  
         }

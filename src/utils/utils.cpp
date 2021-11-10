@@ -107,7 +107,7 @@ void processOption(City* city, int &option) {
             listAllBuildings(city);
             break;
         case DEMOLISH_BUILDING_BY_COORDINATES:
-            //demolishByCoordinates();
+            demolishByCoordinates(city);
             break;
         case SHOW_MAP:
             city -> getMap() ->showMap();
@@ -125,9 +125,7 @@ void processOption(City* city, int &option) {
             //resourcesRain();
             break;
         case QUIT_AND_SAVE:
-            saveAndQuit(city);
-            break;
-        case QUIT:
+            option = QUIT;
             break;
         default:
             cout << "ERROR" << endl;
@@ -156,29 +154,49 @@ bool isValidBuildingName(string buildingName) {
     return isValid;
 }
 
-void RequestCoord(int* xCoord, int* yCoord) {
-    cout << "Por favor, ingrese la coordenada x" << endl;
-    cin >> *xCoord;
-    cout << "Por favor, ingrese la coordenada y" << endl;
-    cin >> *yCoord;
+void requestCoord(int* coord, char axe) {
+    cout << "Por favor, ingrese la coordenada " << axe << endl;
+    cin >> *coord;
 }
 
-bool isValidCoord(int xCoord, int yCoord, City* city) {
-    bool isValid = true;
+bool isValidCoord(int coord, int max, char axe) {
+    cout << "en isValidCoord" << endl;
+    bool validOption = false;
+    while(validOption == false) {
+        if(cin.fail()) {
+            cin.clear();
+            cin.ignore(sizeof(int), '\n');
+            cout << TXT_RED_196 << "La coordenada ingresada es invalida, por favor ingrese nuevamente" << END_COLOR << endl;
+            requestCoord(&coord, axe);
+        }
+        else if (coord <= 0  || coord > max) {
+            cout << TXT_RED_196 << "La coordenada ingresada es invalida, por favor ingrese nuevamente" << END_COLOR << endl;
+            requestCoord(&coord, axe);
+        }
+            validOption = true;
+    }
+
+    return validOption;
+}
+
+bool areValidCoords(int xCoord, int yCoord, City* city) {
+    bool isValid = false;
     int height = city -> getMap() -> getHeight();
     int width = city -> getMap() -> getWidth();
 
-    if(xCoord < 0 || xCoord > height || yCoord < 0 || yCoord > width) 
-        isValid = false;
-
+    if(isValidCoord(xCoord, height, 'x'))
+        isValid = true;
+    if(isValidCoord(yCoord, width, 'y'))
+        isValid = true;
+  
     return isValid;
 }
 
-bool confirmBuildingRequest(string name, int xCoord, int yCoord) {
+bool confirmActionRequest(string name, string action, int xCoord, int yCoord) {
     int option = ERROR;
     bool confirmation = false;
     while(option != 1 && option != 2) {
-        cout << "¿Esta seguro que desea construir el edificio " << name << 
+        cout << "¿Esta seguro que desea " << action << " el edificio " << name << 
         " en " << "la posicion (" << xCoord << ", " << yCoord << ")" << "?" << endl;
         cout << "\t 1. Si" << endl;
         cout << "\t 2. No" << endl;
@@ -187,24 +205,6 @@ bool confirmBuildingRequest(string name, int xCoord, int yCoord) {
             confirmation = true;
     }
     return confirmation;
-}
-
-bool confirmDemolishionRequest(string name, int xCoord, int yCoord) {
-    int option = ERROR;
-    bool confirmation = false;
-    while(option != 1 && option != 2) {
-        cout << "¿Esta seguro que desea demoler el edificio " << name << 
-        " en " << "la posicion (" << xCoord << ", " << yCoord << ")" << "?" << endl;
-        cout << "\t 1. Si" << endl;
-        cout << "\t 2. No" << endl;
-        cin >> option;
-        if(option == 1)
-            confirmation = true;
-    }
-    return confirmation;
-}
-
-void saveAndQuit(City* city) {
 }
 
 void buildByName(City* city) {
@@ -217,14 +217,31 @@ void buildByName(City* city) {
     }
 
     int xCoord, yCoord;
-    RequestCoord(&xCoord, &yCoord);
-    while(!(isValidCoord(xCoord, yCoord, city))) {
-        cout << "Error, las coordenadas ingresadas no son validas, por favor ingreselas nuevamente" << endl;
-        RequestCoord(&xCoord, &yCoord);
-    }
+    cout << "Pido x" << endl;
+    requestCoord(&xCoord, 'x');
+    cout << "Pido y" << endl;
+    requestCoord(&yCoord, 'y');
+    
+    while(!(areValidCoords(xCoord, yCoord, city)));
         
-    if(confirmDemolishionRequest(name, xCoord, yCoord)) {
+    if(confirmActionRequest(name, "construir", xCoord, yCoord)) {
         city -> addBuilding(name, xCoord, yCoord, false);
         cout << "Se ha construido un " << name << " en (" << xCoord << ", " << yCoord << ")" << endl;
+    }
+}
+
+void demolishByCoordinates(City* city) {
+    int xCoord, yCoord;
+    requestCoord(&xCoord, 'x');
+    requestCoord(&yCoord, 'y');
+
+    areValidCoords(xCoord, yCoord, city);
+
+    string name = city -> getBuildingName(xCoord, yCoord);
+
+    if(confirmActionRequest(name, "demoler", xCoord, yCoord)) {
+        cout << "Adentro del if" << endl;
+        city -> removeBuilding(xCoord, yCoord);
+        cout << "Se ha demolido un " << name << " en (" << xCoord << ", " << yCoord << ")" << endl;
     }
 }
