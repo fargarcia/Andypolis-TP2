@@ -104,32 +104,26 @@ void City::collectResources(){
     int height = map -> getHeight();
     int width = map -> getWidth();
     Tile** tiles = map -> getTilesVector();
+    std::string name;
+    int amount;
     for (int x = 0; x < height; x++){
         for (int y = 0; y < width; y++){
             if(tiles[x][y].getType() == GROUND){
-            GroundTile * groundTile = static_cast<GroundTile*>(&tiles[x][y]);
-            if (!(groundTile -> isAvailable())){
-                std::string name = groundTile -> getBuildingTemplate().getName();
-                if(name == MINE){
-
-                }   
-                if(name == SAWMILL){
-
-                }
-                if(name == FACTORY){
-                    
-                }             
-            };
+                GroundTile * groundTile = static_cast<GroundTile*>(&tiles[x][y]);
+                if (!(groundTile -> isAvailable())){
+                    groundTile -> getBuildingTemplate().collectResource(name, amount);
+                    materials -> increaseMaterial(name, amount);
+                    cout << "Se recolectaron " << amount << " de " <<  name << endl;
+                };
+            }
+            if(tiles[x][y].getType() == ROAD){
+                RoadTile * roadTile = static_cast<RoadTile*>(&tiles[x][y]);
+                if (!(roadTile -> isAvailable())){
+                    roadTile -> clearRoad(name, amount);
+                    cout << "Se recolectaron " << amount << " de " <<  name << endl;
+                };
+            }
         }
-        if(tiles[x][y].getType() == ROAD){
-            RoadTile * roadTile = static_cast<RoadTile*>(&tiles[x][y]);
-            if (!(roadTile -> isAvailable())){
-
-            };
-        }
-        }
-        
-        
     }
     
 }

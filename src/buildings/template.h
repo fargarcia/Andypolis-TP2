@@ -2,6 +2,7 @@
 #define TEMPLATE_H
 
 #include <iostream>
+#include "../consts/consts.h"
 
 using namespace std;
 
@@ -11,6 +12,8 @@ class Template {
 		int stoneQuantity;
 		int woodQuantity;
 		int metalQuantity;
+		std::string resourceProduced;
+		int amountProduced;
 
 	public:
 		// Constructores
@@ -40,16 +43,27 @@ class Template {
 		// Pre: 
 		// Post: Devuelve el atributo cantidad de metal de la clase
 		int getMetalQuantity();
+
+		void collectResource(std::string& name, int& amount);
 };
 
 class Mine : public Template {
 	using Template::Template;
+	public:
+		std::string resourceProduced = ROCK;
+		int amountProduced = 15;
 };
 class Sawmill : public Template {
 	using Template::Template;
+	public:
+		std::string resourceProduced = WOOD;
+		int amountProduced = 25;
 };
 class Factory : public Template {
 	using Template::Template;
+	public:
+		std::string resourceProduced = METAL;
+		int amountProduced = 40;
 };
 class School : public Template {
 	using Template::Template;
@@ -65,3 +79,4 @@ class GenericBuilding : public Template {
 };
 
 #endif
+

@@ -49,3 +49,12 @@ void RoadTile::addMaterial(Material* newMaterial){
     material = newMaterial;
 }
 
+void RoadTile::clearRoad(std::string& name, int& amount){
+    name = material -> getName();
+    amount = material -> getQuantity();
+    material = nullptr;
+}
+
+bool RoadTile::isAvailable(){
+    return available;
+}
