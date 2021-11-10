@@ -9,16 +9,22 @@ class Buildings {
 		int numberOfBuildings;
     
 	public:
-    // Constructores
+    	// Constructores
 		Buildings();
 
 		// Getters
+		// Pre: -
+		// Post: Devuelve el el tipo de edificio 
 		BuildingType ** getBuildingTypes();
+		// Pre: -
+		// Post: Devuelve el tipo de edificio dependiendo del string que reciba
 		BuildingType * getBuildingType(std::string type);
+		// Pre: -
+		// Post: Devuelve la cantidad de edificios construidos
 		int getNumberOfBuilding();
 
-    // Setters
-
+	// Pre: Recibir los datos necesarios
+	// Post: Crea un edificio con los datos especificados
     void addBuildingType(std::string name, int stone, int wood, int metal, int allowedAmount);
     
 };

@@ -15,6 +15,8 @@ class Map {
         Map();
         void setHeight(int newHeight);
         void setWidth(int newWidth);
+        int getHeight();
+        int getWidth();
         void createMap(int height, int width);
         void addTile(int xCoord, int yCoord, std::string tileType);
         Tile& getTile(int xCoord, int yCoord);

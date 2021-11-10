@@ -23,7 +23,8 @@ BuildingType **Buildings::getBuildingTypes(){
 
 BuildingType * Buildings::getBuildingType(std::string type){
   int i = 0;
-  while (i < numberOfBuildings && type != buildingTypes[i] -> getName()) i++;
+  while (i < numberOfBuildings && type != buildingTypes[i] -> getName()) 
+      i++;
   return i == numberOfBuildings ? NULL : buildingTypes[i];
 };
 

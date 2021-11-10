@@ -3,7 +3,7 @@
 #include <sstream>
 #include <stdlib.h>
 #include <iterator>
-#include <limits>
+#include <string>
 
 #include "utils.h"
 #include "../materials/materials.h"
@@ -12,6 +12,7 @@
 #include "../consts/consts.h"
 #include "../consts/colors.h"
 #include "../map/map.h"
+#include "../city/utils/paths.h"
 
 using namespace std;
 
@@ -72,7 +73,7 @@ void listBuiltBuildings(City* city) {
     cout << "----------------------------------------------------------------------------" << endl;
 }
 
-void askForOption(int* option) {
+void requestOption(int* option) {
     cout << "Ingrese el numero de la accion que desea realizar." << endl;
     cin >> *option;
 }
@@ -84,11 +85,11 @@ void validateSelectedOption(int& selectedOption) {
             cin.clear();
             cin.ignore(sizeof(int), '\n');
             cout << TXT_RED_196 << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << END_COLOR << endl;
-            askForOption(&selectedOption);
+            requestOption(&selectedOption);
         }
         else if (selectedOption <= 0  || selectedOption > 10) {
             cout << TXT_RED_196 << "La opcion elegida no es una opcion valida, por favor seleccione otra opcion" << END_COLOR << endl;
-            askForOption(&selectedOption);
+            requestOption(&selectedOption);
         }
             validOption = true;
     }
@@ -110,7 +111,6 @@ void processOption(City* city, int &option) {
             break;
         case SHOW_MAP:
             city -> getMap() ->showMap();
-            //showMap();
             break;
         case CHECK_COORDINATE:
             //checkCoordinates();
@@ -125,7 +125,7 @@ void processOption(City* city, int &option) {
             //resourcesRain();
             break;
         case QUIT_AND_SAVE:
-            //saveAndExit();
+            saveAndQuit(city);
             break;
         case QUIT:
             break;
@@ -134,4 +134,130 @@ void processOption(City* city, int &option) {
             break;
 
     }
+}
+
+void RequestBuildingName(string* buildingName) {
+    string aux;
+    cout << "Por favor, ingrese el nombre del edificio" << endl;
+    cin >> *buildingName;
+    if(*buildingName == "planta") {
+        cin >> aux;
+        *buildingName = *buildingName + aux;
+    }
+}
+
+bool isValidBuildingName(string buildingName) {
+    bool isValid = true;
+    if(buildingName != MINE && buildingName != SAWMILL && buildingName != FACTORY && 
+    buildingName != SCHOOL && buildingName != OBELISK && buildingName != POWER_PLANT) {
+        isValid = false;
+    }
+
+    return isValid;
+}
+
+void RequestCoord(int* xCoord, int* yCoord) {
+    cout << "Por favor, ingrese la coordenada x" << endl;
+    cin >> *xCoord;
+    cout << "Por favor, ingrese la coordenada y" << endl;
+    cin >> *yCoord;
+}
+
+bool isValidCoord(int xCoord, int yCoord, City* city) {
+    bool isValid = true;
+    int height = city -> getMap() -> getHeight();
+    int width = city -> getMap() -> getWidth();
+
+    if(xCoord < 0 || xCoord > height || yCoord < 0 || yCoord > width) 
+        isValid = false;
+
+    return isValid;
+}
+
+void saveAndQuit(City* city) {
+    saveBuildings(city);
+    saveMaterials(city);
+    saveMap(city);
+    saveLocations(city);
+}
+
+void saveBuildings(City* city) {
+    fstream buildingsFile(PATH_BUILDINGS, ios::trunc);
+    if(!(buildingsFile.is_open())) {
+        cout << TXT_RED_196 << "No se pudo abrir el archivo " << PATH_BUILDINGS << " para guardar los datos." << END_COLOR << endl;
+        return;
+    }
+
+    BuildingType** buildingTypes = city -> getBuildingTypes();
+    int numberOfBuildings = city -> getNumberOfBuilding();
+    for(int i = 0; i < numberOfBuildings; i++) {
+        if(buildingTypes[i] -> getBuiltAmount() != 0) {
+            buildingsFile << buildingTypes[i] -> getName() <<" "<< "\t";
+            buildingsFile << buildingTypes[i] -> getTemplate() -> getStoneQuantity();
+            buildingsFile << buildingTypes[i] -> getTemplate() -> getWoodQuantity();
+            buildingsFile << buildingTypes[i] -> getTemplate() -> getMetalQuantity();
+            buildingsFile << buildingTypes[i] -> getBuiltAmount() + buildingTypes[i] -> getRemaining() << "\t\t\t";
+        }
+    }
+    buildingsFile.close();
+}
+
+void saveMaterials(City* city) {
+    fstream materialsFile(PATH_MATERIALS, ios::trunc);
+    if(!(materialsFile.is_open())) {
+        cout << TXT_RED_196 << "No se pudo abrir el archivo " << PATH_MATERIALS << " para guardar los datos." << END_COLOR << endl;
+        return;
+    }
+
+    Material** materials = city -> getMaterials();
+    int numberOfMaterials =  city -> getNumberOfMaterials();
+    for (int i = 0; i < numberOfMaterials; i++)
+        materialsFile << materials[i] -> getName() << ":\t" << materials[i] -> getQuantity() << endl;
+    materialsFile.close();
+}
+
+void saveMap(City* city) {
+    fstream mapFile(PATH_MAP, ios::trunc);
+    if(!(mapFile.is_open())) {
+        cout << TXT_RED_196 << "No se pudo abrir el archivo " << PATH_MAP << " para guardar los datos." << END_COLOR << endl;
+        return;
+    }
+
+    int height = city -> getMap() -> getHeight();
+    int width = city -> getMap() -> getWidth();
+    mapFile << height << " " << width << endl;
+    for(int i = 0; i < height; i++) {
+        for(int j = 0; j < width; j++) {
+            string tileType = city -> getMap() -> getTile(i, j).getType();
+            if(tileType == LAKE) 
+                mapFile << "L" << " ";
+            else if(tileType == GROUND) 
+                mapFile << "T" << " ";
+            else if(tileType == ROAD)
+                mapFile << "C" << " ";
+        }
+        cout << endl;
+    }
+    mapFile.close();
+}
+
+void saveLocations(City* city) {
+    fstream locationsFile(PATH_LOCATIONS, ios::trunc);
+    if(!(locationsFile.is_open())) {
+        cout << TXT_RED_196 << "No se pudo abrir el archivo " << PATH_LOCATIONS << " para guardar los datos." << END_COLOR << endl;
+        return;
+    }
+
+    int height = city -> getMap() -> getHeight();
+    int width = city -> getMap() -> getWidth();
+    for(int i = 0; i < height; i++) {
+        for(int j = 0; j < width; j++) {
+            string tileType = city -> getMap() -> getTile(i, j).getType();
+            if(tileType == GROUND && (!(static_cast<GroundTile*>(&(city -> getMap() -> getTile(i, j)))->isAvailable()))) {
+                locationsFile << static_cast<GroundTile*>(&(city -> getMap() -> getTile(i, j))) -> getBuildingTemplate().getName();
+                locationsFile << " (" << i << ", " << j << ")" << endl;
+            }  
+        }
+    }
+    locationsFile.close();
 }
