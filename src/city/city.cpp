@@ -47,19 +47,29 @@ int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
 }
 
 bool City::removeBuilding(int xCoord, int yCoord){
+    cout << "En removeBuilding" << endl;
     Tile* tile = map -> getTile(xCoord, yCoord);
     int status = false;
     if(tile -> getType() == GROUND){
+        cout << "Adento del primer if" << endl;
         GroundTile* groundTile = static_cast<GroundTile*>(tile);
         if(!groundTile -> isAvailable()){
+            cout << "Adento del segundo if" << endl;
             Template buildingTemplate = groundTile -> getBuildingTemplate();
+            cout << "aaaa" << endl;
             materials -> increaseMaterial(ROCK, buildingTemplate.getStoneQuantity()/2);
+            cout << "Despues de incrementar piedra" << endl;
             materials -> increaseMaterial(METAL, buildingTemplate.getMetalQuantity()/2);
+            cout << "Despues de incrementar metal" << endl;
             materials -> increaseMaterial(WOOD, buildingTemplate.getWoodQuantity()/2);
+            cout << "Despues de incrementar madera" << endl;
             buildings -> getBuildingType(buildingTemplate.getName()) -> removeBuilding();
+            cout << "Despues de getBuildingType" << endl;
             groundTile -> removeBuilding();
+            cout << "Despues de removeBuilding" << endl;
             status = true;
         }
+        cout << "Afuera del segundo if" << endl;
     }
     return status;
 }
@@ -100,38 +110,10 @@ int City::checkLocation(int xCoord, int yCoord){
     return status;
 };
 
-void City::collectResources(){
-    int height = map -> getHeight();
-    int width = map -> getWidth();
-    Tile** tiles = map -> getTilesVector();
-    for (int x = 0; x < height; x++){
-        for (int y = 0; y < width; y++){
-            if(tiles[x][y].getType() == GROUND){
-            GroundTile * groundTile = static_cast<GroundTile*>(&tiles[x][y]);
-            if (!(groundTile -> isAvailable())){
-                std::string name = groundTile -> getBuildingTemplate().getName();
-                if(name == MINE){
-
-                }   
-                if(name == SAWMILL){
-
-                }
-                if(name == FACTORY){
-                    
-                }             
-            };
-        }
-        if(tiles[x][y].getType() == ROAD){
-            RoadTile * roadTile = static_cast<RoadTile*>(&tiles[x][y]);
-            if (!(roadTile -> isAvailable())){
-
-            };
-        }
-        }
-        
-        
-    }
-    
+std::string City::getBuildingName(int xCoord, int yCoord) {
+    Tile* tile = map -> getTile(xCoord, yCoord);
+    GroundTile* groundTile = static_cast<GroundTile*>(tile);
+    return  groundTile -> getBuildingTemplate().getName();
 }
 
 void City::materialsRain() {
