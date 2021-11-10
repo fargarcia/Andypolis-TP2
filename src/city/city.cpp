@@ -13,6 +13,13 @@ City::City(){
     loadLocations(this);
 }
 
+City::~City(){
+    saveBuildings(this);
+    saveMaterials(this);
+    saveMap(this);
+    saveLocations(this);
+}
+
 Map* City::getMap() {
     return map;
 }
@@ -93,9 +100,41 @@ int City::checkLocation(int xCoord, int yCoord){
     return status;
 };
 
+void City::collectResources(){
+    int height = map -> getHeight();
+    int width = map -> getWidth();
+    Tile** tiles = map -> getTilesVector();
+    for (int x = 0; x < height; x++){
+        for (int y = 0; y < width; y++){
+            if(tiles[x][y].getType() == GROUND){
+            GroundTile * groundTile = static_cast<GroundTile*>(&tiles[x][y]);
+            if (!(groundTile -> isAvailable())){
+                std::string name = groundTile -> getBuildingTemplate().getName();
+                if(name == MINE){
 
+                }   
+                if(name == SAWMILL){
 
-void City::materialsRain(Map *map) {
+                }
+                if(name == FACTORY){
+                    
+                }             
+            };
+        }
+        if(tiles[x][y].getType() == ROAD){
+            RoadTile * roadTile = static_cast<RoadTile*>(&tiles[x][y]);
+            if (!(roadTile -> isAvailable())){
+
+            };
+        }
+        }
+        
+        
+    }
+    
+}
+
+void City::materialsRain() {
     //int roadTilesAmount = map -> getRoadTileAmount();
     /*
     Piedra: 1 o 2 

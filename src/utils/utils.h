@@ -47,19 +47,6 @@ void processOption(City* city, int &option);
 // Post: Se encarga de guardar los archivos con los datos actualizados y
 // salir del programa
 void saveAndQuit(City* city);
-// Pre: Recibir un puntero a la ciudad
-// Post: Sobreescribe el archivo de edificios.txt con los nuevos datos
-void saveBuildings(City* city);
-// Pre: Recibir un puntero a la ciudad
-// Post: Sobreescribe el archivo de materiales.txt con los nuevos datos
-void saveMaterials(City* city);
-// Pre: Recibir un puntero a la ciudad
-// Post: Sobreescribe el archivo de mapa.txt con los nuevos datos
-void saveMap(City* city);
-// Pre: Recibir un puntero a la ciudad
-// Post: Sobreescribe el archivo de ubicaciones.txt con los nuevos datos
-void saveLocations(City* city);
-
 
 // Pre: Recibir un puntero a la ciudad
 // Post: Muestra por consola todos los edificios construidos hasta el 

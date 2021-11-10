@@ -46,6 +46,14 @@ Tile* Map::getTile(int xCoord, int yCoord){
     return &tiles[xCoord][yCoord];
 }
 
+Tile** Map::getTilesVector(){
+    return tiles;
+}
+
+Tile** Map::getRoadTiles(){
+    return 0;
+}
+
 void Map::setRoadTileAmount(int amount) {
     roadTileAmount = amount;
 }
