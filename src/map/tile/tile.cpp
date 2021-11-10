@@ -19,28 +19,27 @@ LakeTile::LakeTile() {
 
 GroundTile::GroundTile() {
     setType(GROUND);
-    setBuildingAsNull();
+    available = true;
 }
 
 Template GroundTile::getBuildingTemplate() {
     return *building;
 }
 
-void GroundTile::setBuildingAsNull() {
-    building = NULL;
-    cout << "building " << building << endl;
-}
-
 void GroundTile::addBuilding(Template* buildingTemplate) {
+    available = false;
     building = buildingTemplate;
 }
 bool GroundTile::isAvailable() {
-    cout << building << endl;
-    if (building == nullptr)
-        cout << "hola2" << endl;
-    return (building == NULL);
+    return available;
 };
 
 RoadTile::RoadTile() {
     setType(ROAD);
+    available = true;
+}
+
+void RoadTile::addMaterial(Material* newMaterial){
+    available = false;
+    material = newMaterial;
 }

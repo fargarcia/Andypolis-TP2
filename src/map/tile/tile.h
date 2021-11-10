@@ -2,6 +2,7 @@
 #define TILE_H
 
 #include "../../buildings/template.h"
+#include "../../materials/materials.h"
 
 class Tile {
 
@@ -23,6 +24,7 @@ class LakeTile : public Tile {
 class GroundTile : public Tile {
     private:
         Template* building = nullptr;
+        bool available;
     public:
         GroundTile();
         void setBuildingAsNull();
@@ -32,8 +34,13 @@ class GroundTile : public Tile {
 };
 
 class RoadTile : public Tile {
+    private:
+        Material* material;
+        bool available;
 	public:
         RoadTile();
+        void addMaterial(Material* newMaterial);
+        bool isAvailable();
 };
 
 #endif

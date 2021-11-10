@@ -18,6 +18,7 @@ class City {
         int getNumberOfBuilding();
         Map* getMap();
         int addBuilding(std::string name, int xCoord, int yCoord, bool fromFile);
+        int removeBuilding(int xCoord, int yCoord);
 
         void materialsRain(Map *map);
 
