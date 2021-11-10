@@ -30,6 +30,7 @@ class GroundTile : public Tile {
         void setBuildingAsNull();
         Template getBuildingTemplate();
         void addBuilding(Template* buildingTemplate);
+        void removeBuilding();
         bool isAvailable();
 };
 

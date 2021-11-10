@@ -39,6 +39,24 @@ int City::addBuilding(std::string name, int xCoord, int yCoord, bool fromFile){
     return response;
 }
 
+bool City::removeBuilding(int xCoord, int yCoord){
+    Tile* tile = map -> getTile(xCoord, yCoord);
+    int status = false;
+    if(tile -> getType() == GROUND){
+        GroundTile* groundTile = static_cast<GroundTile*>(tile);
+        if(!groundTile -> isAvailable()){
+            Template buildingTemplate = groundTile -> getBuildingTemplate();
+            materials -> increaseMaterial(ROCK, buildingTemplate.getStoneQuantity()/2);
+            materials -> increaseMaterial(METAL, buildingTemplate.getMetalQuantity()/2);
+            materials -> increaseMaterial(WOOD, buildingTemplate.getWoodQuantity()/2);
+            buildings -> getBuildingType(buildingTemplate.getName()) -> removeBuilding();
+            groundTile -> removeBuilding();
+            status = true;
+        }
+    }
+    return status;
+}
+
 Material** City::getMaterials(){
     return materials -> getMaterials();
 }

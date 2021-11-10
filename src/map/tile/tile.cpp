@@ -34,6 +34,11 @@ bool GroundTile::isAvailable() {
     return available;
 };
 
+void GroundTile::removeBuilding(){
+    available = true;
+    building = nullptr;
+}
+
 RoadTile::RoadTile() {
     setType(ROAD);
     available = true;
@@ -43,3 +48,4 @@ void RoadTile::addMaterial(Material* newMaterial){
     available = false;
     material = newMaterial;
 }
+

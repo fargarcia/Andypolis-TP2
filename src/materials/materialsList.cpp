@@ -43,3 +43,9 @@ int  MaterialsList::getAvailableWood(){
 int  MaterialsList::getAvailableMetal(){
   return getMaterial(METAL) -> getQuantity();
 };
+
+void MaterialsList::increaseMaterial(std::string name, int amount){
+  Material* material = getMaterial(name);
+  int newAmount = material -> getQuantity() + amount;
+  material -> setQuantity(newAmount);
+}
