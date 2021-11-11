@@ -249,6 +249,35 @@ void demolishByCoordinates(City* city) {
     }
 }
 
+void checkCoordinates(City* city) {
+    int xCoord, yCoord;
+    requestCoord(&xCoord, 'x');
+    requestCoord(&yCoord, 'y');
+
+    Tile* tile = city -> getMap() -> getTile(xCoord, yCoord);
+    std::string type = tile -> getType();
+    if(type == LAKE){
+        cout << "Soy un casillero del lago."<< endl;
+    }
+    if(type == GROUND){
+        GroundTile* groundTile = static_cast<GroundTile*>(tile);
+        if (groundTile->isAvailable()){
+            cout << "Soy un construible y me encuentro vacío."<< endl;
+        } else {
+            std::string name = groundTile -> getBuildingTemplate().getName();
+            cout << "Soy un/a "<< name << " y me encuentro en el casillero consultado." << endl;
+        }
+    }
+    if(type == ROAD){
+        RoadTile* roadTile = static_cast<RoadTile*>(tile);
+        if (roadTile -> isAvailable()){
+            cout << "Soy un transitable y me encuentro vacío."<< endl;
+        } else {
+            //roadTile ->
+        }
+    }
+}
+
 void printError(int error){
     switch (error){
     case NOT_ENOUGH_WOOD:

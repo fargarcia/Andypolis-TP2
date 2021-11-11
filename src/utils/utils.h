@@ -78,7 +78,7 @@ void demolishByCoordinates(City* city);
 void showMap();
 // Pre: -
 // Post: 
-void checkCoordinates();
+void checkCoordinates(City* city);
 // Pre: -
 // Post: 
 void collectResources();

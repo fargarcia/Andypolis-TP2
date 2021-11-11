@@ -36,7 +36,6 @@ bool GroundTile::isAvailable() {
 
 void GroundTile::removeBuilding(){
     available = true;
-    building = nullptr;
 }
 
 RoadTile::RoadTile() {
