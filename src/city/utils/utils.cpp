@@ -84,7 +84,7 @@ void loadLocations(City* city){
     locationsFile >> yCoord;
     int buildingError = city -> addBuilding(name, trimCoords(xCoord), trimCoords(yCoord), true);
     if (buildingError) {
-      cout << "No se pudo crear el edifcio " << name << buildingError << endl;
+      cout << "No se pudo crear el edifcio " << name << endl;
     }
   }
 }

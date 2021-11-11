@@ -120,13 +120,13 @@ void processOption(City* city, int &option) {
             city -> getMap() ->showMap();
             break;
         case CHECK_COORDINATE:
-            //checkCoordinates();
+            checkCoordinates(city);
             break;
         case SHOW_INVENTORY:
             showInventory(city);
             break;
         case COLLECT_RESOURCES_PRODUCED:
-            //collectResources();
+            city -> collectResources();
             break;
         case RAIN_OF_RESOURCES:
             //resourcesRain();
@@ -262,7 +262,7 @@ void checkCoordinates(City* city) {
     if(type == GROUND){
         GroundTile* groundTile = static_cast<GroundTile*>(tile);
         if (groundTile->isAvailable()){
-            cout << "Soy un construible y me encuentro vacío."<< endl;
+            cout << "Soy un casillero construible y me encuentro vacío."<< endl;
         } else {
             std::string name = groundTile -> getBuildingTemplate().getName();
             cout << "Soy un/a "<< name << " y me encuentro en el casillero consultado." << endl;
@@ -271,9 +271,10 @@ void checkCoordinates(City* city) {
     if(type == ROAD){
         RoadTile* roadTile = static_cast<RoadTile*>(tile);
         if (roadTile -> isAvailable()){
-            cout << "Soy un transitable y me encuentro vacío."<< endl;
+            cout << "Soy un casillero transitable y me encuentro vacío."<< endl;
         } else {
-            //roadTile ->
+            std::string name = roadTile -> getMaterial();
+            cout << "Soy un/a "<< name << " y me encuentro en el casillero consultado." << endl;
         }
     }
 }

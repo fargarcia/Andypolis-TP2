@@ -18,6 +18,21 @@ Template::Template(const Template& copy){
 	woodQuantity = copy.woodQuantity;
 	metalQuantity = copy.metalQuantity;
 	return;
+};
+
+void Sawmill::collectResource(std::string& name, int& amount){
+	name = "madera";
+	amount = 25;
+}
+
+void Mine::collectResource(std::string& name, int& amount){
+	name = "piedra";
+	amount = 15;
+}
+
+void Factory::collectResource(std::string& name, int& amount){
+	name = "metal";
+	amount = 40;
 }
 
 // getters
@@ -35,9 +50,4 @@ int Template::getWoodQuantity() {
 
 int Template::getMetalQuantity() {
   	return metalQuantity;
-}
-
-void Template::collectResource(std::string& name, int& amount){
-	name = resourceProduced;
-	amount = amountProduced;
 }

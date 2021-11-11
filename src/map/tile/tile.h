@@ -43,6 +43,7 @@ class RoadTile : public Tile {
         void addMaterial(Material* newMaterial);
         bool isAvailable();
         void clearRoad(std::string& name, int& amount);
+        std::string getMaterial();
 };
 
 #endif

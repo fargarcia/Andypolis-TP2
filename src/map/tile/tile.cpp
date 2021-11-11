@@ -57,3 +57,7 @@ void RoadTile::clearRoad(std::string& name, int& amount){
 bool RoadTile::isAvailable(){
     return available;
 }
+
+std::string RoadTile::getMaterial(){
+    return material -> getName();
+}
