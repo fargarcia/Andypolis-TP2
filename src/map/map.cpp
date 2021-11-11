@@ -76,35 +76,46 @@ int Map::countRoadTileAmount(int height, int width, std::string tileType) {
 
 void Map::printMap(int row, int col) {
     if(tiles[row][col].getType() == GROUND) {
-    /*
-    ** ESTA COMENTADO PORQUE isAvailable() NO FUNCIONA Y SE ROMPE
-    if(!(static_cast<GroundTile*>(&tiles[i][j])->isAvailable())) {
-        string name = static_cast<GroundTile*>(&tiles[i][j]) -> getBuildingTemplate().getName();
-        // IMPRIMIR LA INICIAL DEL EDIFICIO
-    }*/
-    cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
-    cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
-    cout << BGND_DARK_GREEN_22 << "   " << END_COLOR;
+        if(static_cast<GroundTile*>(&tiles[row][col])->isAvailable() == false) {
+            string name = static_cast<GroundTile*>(&tiles[row][col]) -> getBuildingTemplate().getName(); 
+            if(name == MINE)
+                cout << BGND_DARK_GREEN_22 << MINE_INITIALS << END_COLOR;
+            else if(name == SAWMILL)
+                cout << BGND_DARK_GREEN_22 << SAWMILL_INITIALS << END_COLOR;
+            else if(name == FACTORY)
+                cout << BGND_DARK_GREEN_22 << FACTORY_INITIALS << END_COLOR;
+            else if(name == SCHOOL)
+                cout << BGND_DARK_GREEN_22 << SCHOOL_INITIALS << END_COLOR;
+            else if(name == OBELISK)
+                cout << BGND_DARK_GREEN_22 << OBELISK_INITIALS << END_COLOR;
+            else if(name == POWER_PLANT)
+                cout << BGND_DARK_GREEN_22 << POWER_PLAT_INITIALS << END_COLOR;
+            else 
+                cout << BGND_DARK_GREEN_22 << " " << END_COLOR;
+        }
+        else {
+                cout << BGND_DARK_GREEN_22 << " " << END_COLOR;
+                cout << BGND_DARK_GREEN_22 << " " << END_COLOR;
+                cout << BGND_DARK_GREEN_22 << " " << END_COLOR;
+            }
     }
     else if(tiles[row][col].getType() == LAKE) {
-        cout << BGND_BLUE_20 << "   " << END_COLOR;
-        cout << BGND_BLUE_20 << "   " << END_COLOR;
-        cout << BGND_BLUE_20 << "   " << END_COLOR;
+        cout << BGND_BLUE_20 << " " << END_COLOR;
+        cout << BGND_BLUE_20 << " " << END_COLOR;
+        cout << BGND_BLUE_20 << " " << END_COLOR;
     }
     else if(tiles[row][col].getType() == ROAD) {
-        cout << BGND_DARK_GRAY_237 << "   " << END_COLOR;
-        cout << BGND_DARK_GRAY_237 << "   " << END_COLOR;
-        cout << BGND_DARK_GRAY_237 << "   " << END_COLOR;
+        cout << BGND_DARK_GRAY_237 << " " << END_COLOR;
+        cout << BGND_DARK_GRAY_237 << " " << END_COLOR;
+        cout << BGND_DARK_GRAY_237 << " " << END_COLOR;
     }
 }
 
 void Map::showMap() {
     for(int i = 0; i < height; i++) {
-        for(int j = 0; j < 3; j++) {
-            for(int k = 0; k < width; k++) {
-                printMap(i, k);
-            }
-            cout << endl;
+        for(int j = 0; j < width; j++) {
+            printMap(i, j);
         }
+        cout << endl;
     }
 }

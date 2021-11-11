@@ -15,7 +15,7 @@ City::City(){
 
 City::~City(){
     //saveBuildings(this);
-    //saveMaterials(this);
+    saveMaterials(this);
     //saveMap(this);
     saveLocations(this);
 }

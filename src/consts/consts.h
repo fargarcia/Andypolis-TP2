@@ -34,4 +34,12 @@ const std::string	LAKE		= "L";
 const std::string	GROUND		= "T";
 const std::string	ROAD		= "C";
 
+const std::string	MINE_INITIALS 		= "M";
+const std::string	SAWMILL_INITIALS 	= "A";
+const std::string	FACTORY_INITIALS	= "F";
+const std::string	SCHOOL_INITIALS		= "E";
+const std::string	OBELISK_INITIALS	= "O";
+const std::string	POWER_PLAT_INITIALS	= "P";
+
+
 #endif

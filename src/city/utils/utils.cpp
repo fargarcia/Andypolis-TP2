@@ -15,21 +15,21 @@
 using namespace std;
 
 void loadMap(Map* map){
-  fstream mapFile(PATH_MAP, ios::in);
+    fstream mapFile(PATH_MAP, ios::in);
     if (!mapFile.is_open())
         cout << "File not found: " << PATH_MAP << endl;
-  int height, width;
-  std::string tileType;
-  mapFile >> height;
-  mapFile >> width;
-  map->createMap(height, width);
-  for (int xCoord = 0; xCoord < height; xCoord++){
-    for (int yCoord = 0; yCoord < width; yCoord++){
-      mapFile >> tileType;
-      map -> addTile(xCoord, yCoord, tileType);
-      map -> setRoadTileAmount(map -> countRoadTileAmount(height, width, tileType));
+    int height, width;
+    std::string tileType;
+    mapFile >> height;
+    mapFile >> width;
+    map->createMap(height, width);
+    for (int xCoord = 0; xCoord < height; xCoord++){
+        for (int yCoord = 0; yCoord < width; yCoord++){
+            mapFile >> tileType;
+            map -> addTile(xCoord, yCoord, tileType);
+            map -> setRoadTileAmount(map -> countRoadTileAmount(height, width, tileType));
+        }
     }
-  }
 }
 
 void loadMaterials(MaterialsList* materialsList) {
@@ -103,7 +103,7 @@ void saveBuildings(City* city) {
         buildingsFile << buildingTypes[i] -> getTemplate() -> getStoneQuantity() << " ";
         buildingsFile << buildingTypes[i] -> getTemplate() -> getWoodQuantity() << " ";
         buildingsFile << buildingTypes[i] -> getTemplate() -> getMetalQuantity() << " ";
-        buildingsFile << buildingTypes[i] -> getBuiltAmount() + buildingTypes[i] -> getRemaining() << "\t\t\t";
+        buildingsFile << buildingTypes[i] -> getBuiltAmount() + buildingTypes[i] -> getRemaining() << endl;
     }
     buildingsFile.close();
 }
